@@ -43,6 +43,7 @@ const combatData = reactive({
   zone: '' as PvPBattle | "",
   ptMax: 0,
   battleStartTime: 0,
+  currentDamageDealt: 0,
 
   // * 战意
   highestBh: 0,
@@ -357,6 +358,7 @@ const useCombatParser = () => {
         }
       }
       combatData.onConflict = false; combatData.zone = ''; combatData.gc = ''
+      combatData.currentDamageDealt = 0
       combatData.gcFp.maelstrom = 0; combatData.gcFp.twinadder = 0; combatData.gcFp.immoflame = 0
       Object.entries(combatData.pointMap).forEach(([key, val]) => {
         if (val.type === 'initial' || val.type === 'static') delete combatData.pointMap[key]
@@ -429,6 +431,7 @@ const useCombatParser = () => {
       }
       combatData.onConflict = true
       combatData.battleStartTime = Date.now()
+      combatData.currentDamageDealt = 0
       Object.keys(combatData.playerLasthitMap).forEach(key => delete combatData.playerLasthitMap[key])
       combatData.allPlayersDeaths.length = 0
       combatData.goodboys.length = 0
@@ -750,6 +753,14 @@ const useCombatParser = () => {
 
           // 记录上次伤害表
           if (hit && (damageType === 'damage' || damageType === 'both')) {
+            if (
+              damage > 0
+              && victimId !== combatData.playerId
+              && (perpetratorId === combatData.playerId || summonerId === combatData.playerId)
+            ) {
+              combatData.currentDamageDealt += damage
+            }
+
             const specialActions = [
               '星遁天诛', '完人',
               '献身', '全力挥打', '绝空拳', '爆破箭', '胖胖之墙'
@@ -845,6 +856,14 @@ const useCombatParser = () => {
             }
             // 特殊处理反击(上次伤害表、行迹)
             if (refDamage > 0) {
+              const reflectedBySummonerId = combatData.summonMap[victimId]
+              if (
+                perpetratorId !== combatData.playerId
+                && (victimId === combatData.playerId || reflectedBySummonerId === combatData.playerId)
+              ) {
+                combatData.currentDamageDealt += refDamage
+              }
+
               const refActionName = (() => {
                 switch (victimJob) {
                   case 25: return '寒冰环反击'
@@ -1218,6 +1237,21 @@ const useCombatParser = () => {
       death => death.victimName === combatData.playerName
     )
   })
+  const currentBattleStats = computed(() => {
+    const knockoutCount = knockouts.value.length
+    const deathCount = deaths.value.length
+    const damageDealt = combatData.currentDamageDealt
+    const kdRatio = deathCount ? knockoutCount / deathCount : knockoutCount
+
+    return {
+      knockouts: knockoutCount,
+      deaths: deathCount,
+      kdText: `${knockoutCount} / ${deathCount}`,
+      kdRatioText: kdRatio.toFixed(2),
+      damageDealt,
+      damageDealtText: damageDealt.toLocaleString('ja-JP'),
+    }
+  })
   const statistics = computed(() => {
     const dealDouble = (a: number, b: number) => {
       return Math.round((a / (b || 1)) * 100) / 100
@@ -1588,6 +1622,7 @@ const useCombatParser = () => {
     pointData,
     knockouts,
     deaths,
+    currentBattleStats,
     statistics,
     init,
     dispose,

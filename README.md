@@ -42,6 +42,8 @@ https://jinwktk.github.io/frontline-overlay-jp/
 
 ## 主な機能
 
+「戦況」タブでは、現在試合の残りポイント、拠点状況、K/D、K/D比、与ダメージを確認できます。
+
 <table>
   <tr>
     <th colspan="2"><strong>現在の拠点状況と残りポイント予測をリアルタイム表示</strong></th>

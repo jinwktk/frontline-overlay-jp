@@ -56,3 +56,4 @@
 - `C:\Users\mlove\AppData\Roaming\Advanced Combat Tracker\FFXIVLogs\Network_30109_20260526.log` を確認し、日本語クライアントでは `フロントラインに不滅隊として参加しました！` が出るため、従来の中国語開始判定では `対戦開始を待っています` のままになることを特定した。
 - `scripts/check-jp-parser.cjs` を追加し、日本語フロントライン参加ログとシールロックの日本語アラガントームリスログの回帰チェックを追加した。
 - `useCombatParser.ts` に日本語 GC 名（黒渦団/双蛇党/不滅隊）、日本語フロントライン参加ログ、シールロックのアラガントームリス出現・占拠・中立化・枯渇ログの解析を追加した。
+- 「戦況」タブへ現在試合の K/D、K/D比、与ダメージ表示を追加する方針にした。`scripts/check-current-situation-stats.cjs` で回帰チェックし、`useCombatParser.ts` で現在試合の与ダメージを集計、`SituationTab.vue` で表示する。

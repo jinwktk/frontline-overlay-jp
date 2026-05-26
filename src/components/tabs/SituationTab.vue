@@ -12,6 +12,7 @@ const {
   getGcPoint, getGcIncreaseSpeed,
   situationLockMsg,
   pointData,
+  currentBattleStats,
 } = useCombatParser()
 
 const maxPointCountForPointCard = computed(() => {
@@ -46,6 +47,27 @@ const maxPointCountForPointCard = computed(() => {
         :float-points="getGcPoint(company)"
         :increase-speed="getGcIncreaseSpeed(company)"
       />
+    </div>
+
+    <!-- 現在の戦績 -->
+    <div class="page-title">現在の戦績</div>
+    <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div class="page-content !items-start !py-1 !px-2">
+        <div class="text-sm text-white/70 leading-none">K</div>
+        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.knockouts }}</div>
+      </div>
+      <div class="page-content !items-start !py-1 !px-2">
+        <div class="text-sm text-white/70 leading-none">D</div>
+        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.deaths }}</div>
+      </div>
+      <div class="page-content !items-start !py-1 !px-2">
+        <div class="text-sm text-white/70 leading-none">K/D</div>
+        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.kdRatioText }}</div>
+      </div>
+      <div class="page-content !items-start !py-1 !px-2 min-w-0">
+        <div class="text-sm text-white/70 leading-none">与ダメージ</div>
+        <div class="w-full text-[1.45rem] leading-tight font-semibold tabular-nums truncate">{{ currentBattleStats.damageDealtText }}</div>
+      </div>
     </div>
 
     <!-- 現在の拠点 -->
