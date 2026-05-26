@@ -18,6 +18,16 @@ const expectations = [
     expected: true,
   },
   {
+    name: 'package version follows upstream v3.6.1',
+    actual: packageJson.version,
+    expected: '3.6.1',
+  },
+  {
+    name: 'public version follows package version',
+    actual: JSON.parse(read('public/version.json')).app,
+    expected: packageJson.version,
+  },
+  {
     name: 'app info points to Japanese repository',
     actual: read('src/constants/app-info.ts').includes('https://github.com/jinwktk/frontline-overlay-jp'),
     expected: true,
@@ -50,6 +60,16 @@ const expectations = [
   {
     name: 'app display names use confirmed Japanese name for 沃刻其特',
     actual: read('src/tools/index.ts').includes('ウォーコー・チーテー'),
+    expected: true,
+  },
+  {
+    name: 'changelog localizes upstream v3.6.1 note',
+    actual: read('CHANGELOG.md').includes('戦意高揚アイコンが正しく表示されない問題を修正しました。'),
+    expected: true,
+  },
+  {
+    name: 'battle high icon path is relative for GitHub Pages',
+    actual: read('src/components/CombatLogCard.vue').includes('`icon/game-effect/battlehigh_${frontlineLog.battleHigh.level}.png`'),
     expected: true,
   },
 ]

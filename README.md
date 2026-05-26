@@ -24,6 +24,7 @@ https://jinwktk.github.io/frontline-overlay-jp/
 - 日本語版リポジトリ: `https://github.com/jinwktk/frontline-overlay-jp`
 - `upstream` に元リポジトリを追加し、更新を取り込める構成にしています。
 - upstream から更新を取り込む場合は、ユーザー向け文言を日本語へ変換してから反映します。
+- 2026-05-27 時点で、upstream の `v3.6.1` まで取り込み済みです。
 
 ## 対応状況
 
