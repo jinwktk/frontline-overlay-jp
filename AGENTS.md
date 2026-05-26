@@ -57,3 +57,4 @@
 - `scripts/check-jp-parser.cjs` を追加し、日本語フロントライン参加ログとシールロックの日本語アラガントームリスログの回帰チェックを追加した。
 - `useCombatParser.ts` に日本語 GC 名（黒渦団/双蛇党/不滅隊）、日本語フロントライン参加ログ、シールロックのアラガントームリス出現・占拠・中立化・枯渇ログの解析を追加した。
 - 「戦況」タブへ現在試合の K/D、K/D比、与ダメージ表示を追加する方針にした。`scripts/check-current-situation-stats.cjs` で回帰チェックし、`useCombatParser.ts` で現在試合の与ダメージを集計、`SituationTab.vue` で表示する。
+- カレンダーはJST 24時（翌日0時）リセットに固定する方針にした。`scripts/check-calendar-jst-reset.cjs` でローカル23時・ブラウザタイムゾーン依存を防ぐ回帰チェックを追加する。

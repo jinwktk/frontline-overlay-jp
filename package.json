@@ -12,10 +12,11 @@
     "build": "vite build",
     "postinstall": "node scripts/update-version.cjs",
     "preview": "vite preview",
-    "test": "npm run test:jp-repo && npm run test:jp-parser && npm run test:current-situation-stats",
+    "test": "npm run test:jp-repo && npm run test:jp-parser && npm run test:current-situation-stats && npm run test:calendar-jst-reset",
     "test:jp-repo": "node scripts/check-jp-repo.cjs",
     "test:jp-parser": "node scripts/check-jp-parser.cjs",
     "test:current-situation-stats": "node scripts/check-current-situation-stats.cjs",
+    "test:calendar-jst-reset": "node scripts/check-calendar-jst-reset.cjs",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache"
