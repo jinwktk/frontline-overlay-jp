@@ -59,3 +59,4 @@
 - 「戦況」タブへ現在試合の K/D、K/D比、与ダメージ表示を追加する方針にした。`scripts/check-current-situation-stats.cjs` で回帰チェックし、`useCombatParser.ts` で現在試合の与ダメージを集計、`SituationTab.vue` で表示する。
 - カレンダーはJST 24時（翌日0時）リセットに固定する方針にした。`scripts/check-calendar-jst-reset.cjs` でローカル23時・ブラウザタイムゾーン依存を防ぐ回帰チェックを追加する。
 - `CalendarTab.vue` の日数計算をJST日番号ベースに変更し、次回更新表示をローカル23時ではなく `Asia/Tokyo` の翌日0時に合わせる。
+- 未対応の戦況ロック表示中でも現在戦績のK/Dと与ダメージを読めるよう、現在戦績ブロックをロック遮罩より上に出す回帰チェックを追加する。

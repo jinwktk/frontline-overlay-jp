@@ -27,6 +27,14 @@ const expectations = [
     actual: situationTabSource.includes('K/D') && situationTabSource.includes('与ダメージ'),
     expected: true,
   },
+  {
+    name: 'Situation tab keeps current stats readable above unsupported lock overlay',
+    actual: situationTabSource.includes('situation-current-stats')
+      && situationTabSource.includes('relative z-30')
+      && situationTabSource.includes('pointer-events-none')
+      && situationTabSource.includes('z-10'),
+    expected: true,
+  },
 ]
 
 for (const expectation of expectations) {
