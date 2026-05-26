@@ -28,14 +28,6 @@ const maxPointCountForPointCard = computed(() => {
 
 <template>
   <div class="page-panel">
-    <!-- 内容锁定遮罩 -->
-    <div v-if="situationLockMsg" class="absolute inset-0 z-20 flex items-center justify-center backdrop-blur-sm bg-black/30">
-      <div class="text-center text-white">
-        <div class="text-4xl mb-2">⛓️🔒⛓️</div>
-        <div class="text-2xl font-semibold">{{ situationLockMsg }}</div>
-      </div>
-    </div>
-
     <!-- 残りポイント -->
     <div class="page-title">残りポイント</div>
     <div class="w-full grid grid-cols-3 gap-2">
@@ -50,39 +42,51 @@ const maxPointCountForPointCard = computed(() => {
     </div>
 
     <!-- 現在の戦績 -->
-    <div class="page-title">現在の戦績</div>
-    <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2">
-      <div class="page-content !items-start !py-1 !px-2">
-        <div class="text-sm text-white/70 leading-none">K</div>
-        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.knockouts }}</div>
-      </div>
-      <div class="page-content !items-start !py-1 !px-2">
-        <div class="text-sm text-white/70 leading-none">D</div>
-        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.deaths }}</div>
-      </div>
-      <div class="page-content !items-start !py-1 !px-2">
-        <div class="text-sm text-white/70 leading-none">K/D</div>
-        <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.kdRatioText }}</div>
-      </div>
-      <div class="page-content !items-start !py-1 !px-2 min-w-0">
-        <div class="text-sm text-white/70 leading-none">与ダメージ</div>
-        <div class="w-full text-[1.45rem] leading-tight font-semibold tabular-nums truncate">{{ currentBattleStats.damageDealtText }}</div>
+    <div class="situation-current-stats relative z-30">
+      <div class="page-title">現在の戦績</div>
+      <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div class="page-content !items-start !py-1 !px-2">
+          <div class="text-sm text-white/70 leading-none">K</div>
+          <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.knockouts }}</div>
+        </div>
+        <div class="page-content !items-start !py-1 !px-2">
+          <div class="text-sm text-white/70 leading-none">D</div>
+          <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.deaths }}</div>
+        </div>
+        <div class="page-content !items-start !py-1 !px-2">
+          <div class="text-sm text-white/70 leading-none">K/D</div>
+          <div class="text-[1.7rem] leading-tight font-semibold tabular-nums">{{ currentBattleStats.kdRatioText }}</div>
+        </div>
+        <div class="page-content !items-start !py-1 !px-2 min-w-0">
+          <div class="text-sm text-white/70 leading-none">与ダメージ</div>
+          <div class="w-full text-[1.45rem] leading-tight font-semibold tabular-nums truncate">{{ currentBattleStats.damageDealtText }}</div>
+        </div>
       </div>
     </div>
 
-    <!-- 現在の拠点 -->
-    <div class="page-title">現在の拠点</div>
-    <div
-      v-if="combatData.zone === Frontline.shatter"
-      class="w-full text-[1.25rem] self-baseline text-white px-1 py-0.5 rounded bg-gray-400/90 border border-black/50"
-    >
-      {{ getFrontlineNames(combatData.zone)[1] }} の現在拠点データ解析にはまだ対応していません。
+    <div class="relative z-10">
+      <!-- 内容锁定遮罩 -->
+      <div v-if="situationLockMsg" class="pointer-events-none absolute inset-0 z-20 flex items-start justify-center bg-black/30 px-2 py-8">
+        <div class="max-w-full text-center text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+          <div class="text-3xl mb-1">⛓️🔒⛓️</div>
+          <div class="text-xl font-semibold leading-tight break-words">{{ situationLockMsg }}</div>
+        </div>
+      </div>
+
+      <!-- 現在の拠点 -->
+      <div class="page-title">現在の拠点</div>
+      <div
+        v-if="combatData.zone === Frontline.shatter"
+        class="w-full text-[1.25rem] self-baseline text-white px-1 py-0.5 rounded bg-gray-400/90 border border-black/50"
+      >
+        {{ getFrontlineNames(combatData.zone)[1] }} の現在拠点データ解析にはまだ対応していません。
+      </div>
+      <PointCards
+        :points="pointData"
+        :max-point-count="maxPointCountForPointCard"
+        :card-style="store.appConfig.situation_pointcard_style"
+      />
     </div>
-    <PointCards
-      :points="pointData"
-      :max-point-count="maxPointCountForPointCard"
-      :card-style="store.appConfig.situation_pointcard_style"
-    />
 
 
     <!-- ウォッチリスト -->
