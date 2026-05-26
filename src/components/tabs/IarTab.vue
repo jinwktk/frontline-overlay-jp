@@ -25,31 +25,31 @@ const parsedIarLog = computed(() => {
 <template>
   <div class="page-panel">
     <div class="w-full flex flex-col gap-0.5 flex-1 overflow-y-auto">
-      <div v-if="!combatData.iarLog.length" class="page-title">暂无数据</div>
-      <AlertTitle v-else-if="!combatData.zone && !combatData.onConflict" msg="此处展示的是上一场的记录，下次进入对战时会被清除。" />
+      <div v-if="!combatData.iarLog.length" class="page-title">データがありません</div>
+      <AlertTitle v-else-if="!combatData.zone && !combatData.onConflict" msg="ここには前回の記録を表示しています。次回の対戦開始時に消去されます。" />
       <div v-for="(log, logIndex) in parsedIarLog" :key="`log-${logIndex}`" class="page-title">
         <div>{{ log.formatedHappenTime }}　</div>
         <div class="flex-1">
-          <span>发动</span>
+          <span>発動:</span>
           <template v-if="log.showExecs">
             <span class="text-orange-700">{{ log.actionTargets.length }}</span>
-            <span>次</span>
+            <span>回</span>
           </template>
           <span class="text-orange-700">{{ log.actionName }}</span>
           <template v-if="log.showHits">
-            <span>命中</span>
+            <span> 命中</span>
             <span class="text-orange-700">{{ log.actionTargets.length }}</span>
             <span>人</span>
           </template>
           <template v-if="log.showDamage">
-            <span>，造成共计</span>
+            <span>、合計</span>
             <span class="text-orange-700">{{ log.totalDamage.toLocaleString() }}</span>
-            <span>伤害</span>
+            <span>ダメージ</span>
           </template>
           <template v-if="log.showHeal">
-            <span>，回复共计</span>
+            <span>、合計</span>
             <span class="text-orange-700">{{ log.totalHeal.toLocaleString() }}</span>
-            <span>体力</span>
+            <span>HP回復</span>
           </template>
         </div>
       </div>

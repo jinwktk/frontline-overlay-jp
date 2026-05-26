@@ -45,3 +45,9 @@
 - `C:\Users\mlove\.codex\config.toml` に重複 hook trust state があり `omx` が起動できなかったため、バックアップ `config.toml.bak-20260526-frontline-overlay-jp` を作成して古い重複 2 エントリを削除した。
 - `omx doctor` は 0 failed。Windows 上の explore harness、prompt/skill 数、ユーザー AGENTS の警告は残っている。
 - `npm test` を実行し、`package.json` の `name` が `frontline-overlay` のままであるため失敗することを確認した。
+- 日本語版実装として、`package.json` / `package-lock.json` の名称を `frontline-overlay-jp` に変更し、`src/constants/app-info.ts` の GitHub リポジトリ URL と更新履歴 URL を日本語版へ変更した。
+- 主要 UI 文言、設定画面、README、CHANGELOG を日本語化した。ログ解析の中国語正規表現や内部スキル名キーは、既存動作を壊さないため原則維持した。
+- `external/cactbot` サブモジュールを初期化した。型チェック時に submodule 側の type-only import で失敗したため、`tsconfig.app.json` で `verbatimModuleSyntax: false` を明示した。
+- `npm test`、`npm run type-check`、`npm run build` が通過した。`npm ci` 後の監査では moderate 2 件、high 6 件の脆弱性警告が出ているが、今回は依存更新は行っていない。
+- ローカル Vite 開発サーバー `http://127.0.0.1:3000/` を起動し、Playwright MCP でトップ画面の日本語表示と初期化ログのみであることを確認した。
+- GitHub Pages は公式 Actions の `configure-pages` / `upload-pages-artifact` / `deploy-pages` で `dist` を公開する構成へ変更した。

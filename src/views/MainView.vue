@@ -33,13 +33,13 @@ onUnmounted(() => {
 })
 
 const applicationTabs = computed(() => [
-  [ 'situation', '战况', SituationTab ],
-  [ 'exploit', '战绩', ExploitTab ],
-  [ 'resent', '恩怨', ResentTab ],
-  [ 'iar', '行迹', IarTab ],
-  [ 'statistics', '统计', StatisticsTab ],
-  [ 'calendar', '日历', CalendarTab ],
-  [ 'about', '关于', AboutTab ],
+  [ 'situation', '戦況', SituationTab ],
+  [ 'exploit', '戦績', ExploitTab ],
+  [ 'resent', '因縁', ResentTab ],
+  [ 'iar', '行動記録', IarTab ],
+  [ 'statistics', '統計', StatisticsTab ],
+  [ 'calendar', 'カレンダー', CalendarTab ],
+  [ 'about', '情報', AboutTab ],
 ] as [string, string, Component][])
 
 const activeTab = ref(applicationTabs.value![0]![0])
@@ -73,7 +73,7 @@ const handleOpenConfigWindow = () => {
           v-if="isDev && !appVar.collapsed"
           class="flex items-center justify-center p-2 border border-transparent rounded text-white hover:bg-white/30 cursor-pointer
             text-shadow transition-colors duration-200"
-          title="生成调试数据"
+          title="デバッグデータを生成"
           @click="buildDebugData"
         >
           <n-icon size="1.25rem">
@@ -84,7 +84,7 @@ const handleOpenConfigWindow = () => {
           v-if="!appVar.collapsed"
           class="flex items-center justify-center p-2 border border-transparent rounded text-white hover:bg-white/30 cursor-pointer
             text-shadow transition-colors duration-200"
-          title="打开设置窗口"
+          title="設定ウィンドウを開く"
           @click="handleOpenConfigWindow"
         >
           <n-icon size="1.25rem">
@@ -95,7 +95,7 @@ const handleOpenConfigWindow = () => {
           class="flex items-center justify-center p-2 border border-transparent rounded text-white cursor-pointer
             text-shadow transition-colors duration-200"
           :class="appVar.collapsed ? 'bg-white/30' : 'hover:bg-white/30'"
-          :title="appVar.collapsed ? '展开' : '折叠'"
+          :title="appVar.collapsed ? '展開' : '折りたたみ'"
           @click="appVar.collapsed = !appVar.collapsed"
         >
           <n-icon size="1.25rem">

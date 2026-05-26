@@ -30,7 +30,7 @@ jobs:
           else
             echo "Version NOT updated!"
             echo "updated=false" >> $GITHUB_OUTPUT
-            echo "::warning file=package.json,line=3::版本号未更新"
+            echo "::warning file=package.json,line=3::バージョン番号が更新されていません"
           fi
 
       - name: Manage version comment
@@ -51,8 +51,8 @@ jobs:
             const versionUpdated = ${{ steps.check_version.outputs.updated }};
 
             const newBody = versionUpdated
-              ? '✅ `package.json` 已正确更新。\r\n<p align="right"><sub>[BotCheck:Version]</sub></p>'
-              : '⚠️ 请在 `package.json` 中更新 `version` 以完成例行更新流程。\r\n<p align="right"><sub>[BotCheck:Version]</sub></p>';
+              ? '✅ `package.json` は正しく更新されています。\r\n<p align="right"><sub>[BotCheck:Version]</sub></p>'
+              : '⚠️ 通常更新を完了するには `package.json` の `version` を更新してください。\r\n<p align="right"><sub>[BotCheck:Version]</sub></p>';
 
             if (existingComment) {
               if (existingComment.body !== newBody) {

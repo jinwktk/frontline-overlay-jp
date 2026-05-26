@@ -49,7 +49,7 @@ const expandIcon = computed(() => {
   return foldDirection.value === 'vertical' ? KeyboardArrowDownRound : KeyboardArrowRightRound
 })
 const folderText = computed(() => {
-  return folded.value ? '展开' : '折叠'
+  return folded.value ? '展開' : '折りたたみ'
 })
 
 const updateUi = () => {

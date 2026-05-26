@@ -19,43 +19,43 @@ const groups = computed(() : ConfigGroup[] => {
   return [
     {
       key: 'general',
-      name: '通用',
+      name: '全般',
       icon: SettingsApplicationsSharp,
       items: [
         {
           key: 'app_scale',
-          name: '悬浮窗缩放',
+          name: 'オーバーレイ拡大率',
           desc: [
-            '调整悬浮窗的显示大小倍数。',
-            '当你使用了infsein.github.io提供的其他悬浮窗时，请使用此处而非ACT的设置来调整缩放。',
-            '调整此项目后，需要刷新一次悬浮窗才能生效。',
+            'オーバーレイの表示倍率を調整します。',
+            '他のオーバーレイと併用する場合も、ACT 側ではなくこちらの設定で調整してください。',
+            'この項目を変更した後は、オーバーレイを一度更新すると反映されます。',
           ],
           type: 'slider-number',
           min: 0.5, max: 2, step: 0.1,
         },
         {
           key: 'auto_collapse_when_launch',
-          name: '启动时自动折叠',
+          name: '起動時に自動で折りたたむ',
           desc: [
-            '在悬浮窗初次加载时自动折叠悬浮窗。',
-            '※ 启用此项目时，刷新悬浮窗也会自动折叠。'
+            'オーバーレイ初回読み込み時に自動で折りたたみます。',
+            '※ 有効にすると、更新時にも自動で折りたたまれます。'
           ],
           type: 'switch',
         },
         {
           key: 'auto_expand_when_enter_battlefield',
-          name: '进入对战时自动展开',
+          name: '対戦開始時に自動で展開',
           desc: [
-            '在对战开始时自动展开悬浮窗。',
+            '対戦開始時にオーバーレイを自動で展開します。',
           ],
           type: 'switch',
         },
         {
           key: 'auto_collapse_when_leave_battlefield',
-          name: '离开对战时自动折叠',
+          name: '対戦終了時に自動で折りたたむ',
           desc: [
-            '在离开对战区域（从PvP区域进入PvE区域）时自动折叠悬浮窗。',
-            '※ 「初次加载」和「从一个PvE区域进入另一个PvE区域」的场合不会触发折叠。',
+            '対戦エリアを離れたとき、オーバーレイを自動で折りたたみます。',
+            '※ 初回読み込み時や PvE エリア間の移動では折りたたみません。',
           ],
           type: 'switch',
         },
@@ -63,38 +63,38 @@ const groups = computed(() : ConfigGroup[] => {
     },
     {
       key: 'situation',
-      name: '战况',
+      name: '戦況',
       icon: FlagFilled,
       items: [
         {
           key: 'situation_pointcard_style',
-          name: '“当前据点”布局',
+          name: '「現在の拠点」レイアウト',
           desc: [
-            '调整“当前据点”中各个据点卡片的布局样式。',
-            '　> 现代：每行展示多个卡片，提高信息密度；',
-            '　> 经典：每行展示一个卡片，维持旧版本习惯。',
+            '「現在の拠点」に表示する拠点カードのレイアウトを調整します。',
+            '　> モダン: 1行に複数カードを表示し、情報密度を上げます。',
+            '　> クラシック: 1行に1カードを表示し、旧バージョンの見た目を維持します。',
           ],
           type: 'select',
           options: [
-            { label: '现代', value: 'modern' },
-            { label: '经典', value: 'classic' },
+            { label: 'モダン', value: 'modern' },
+            { label: 'クラシック', value: 'classic' },
           ]
         },
         {
           key: 'watched_players',
-          name: '关注列表',
+          name: 'ウォッチリスト',
           beta: true,
           desc: [
-            '关注让你印象深刻的玩家，并为其设置简短的备注。',
-            '战斗开始时会自动扫描己方团队，并展示被你关注的玩家和你对他的备注。',
-            '玩家名格式为“玩家名”或“玩家名@服务器名”。',
+            '気になるプレイヤーを登録し、短いメモを付けられます。',
+            '対戦開始時に味方チームを自動で確認し、登録済みプレイヤーとメモを表示します。',
+            'プレイヤー名は「プレイヤー名」または「プレイヤー名@ワールド名」の形式で入力します。',
             {
               className: 'text-orange-600',
-              content: '※ 不会扫描敌方阵营，也不会扫描中途参战的友方玩家。',
+              content: '※ 敵陣営や途中参加した味方プレイヤーは確認しません。',
             },
             {
               className: 'text-red-600',
-              content: `※ 目前最多只能关注${AppInfo.balanceConstants.watchedPlayersMaxCount}名玩家。`,
+              content: `※ 現在登録できるプレイヤーは最大${AppInfo.balanceConstants.watchedPlayersMaxCount}名です。`,
             },
           ],
           type: 'watched-players',
@@ -104,15 +104,15 @@ const groups = computed(() : ConfigGroup[] => {
     },
     {
       key: 'monitor',
-      name: '监控',
+      name: '監視',
       icon: MonitorHeartFilled,
       items: [
         {
           key: 'badboy_threshold',
-          name: '仇怨阈值',
+          name: '妨害判定しきい値',
           desc: [
-            '设置一个10000～99999之间的数字作为阈值。',
-            '当你受到超过阈值的伤害时，即使此技能不在“蒙怨”／“结怨”所监控的阻碍技能之列，也仍然会进入统计。',
+            '10000 から 99999 の間でしきい値を設定します。',
+            'しきい値を超えるダメージを受けた場合、監視対象スキルでなくても妨害統計に記録します。',
           ],
           type: 'number',
           min: 10000, max: 99999,
@@ -160,7 +160,7 @@ const handleSave = () => {
 <template>
   <div class="p-6 max-w-4xl mx-auto space-y-4">
     <div class="text-2xl font-bold flex items-center">
-      设置
+      設定
       <div class="ml-auto">
         <n-button
           type="success"
@@ -200,7 +200,7 @@ const handleSave = () => {
                 <template #trigger>
                   <n-icon size="16" color="#F0A020"><WarningRound /></n-icon>
                 </template>
-                该项目还有待评估，后续版本可能视情况大规模更改甚至删除。
+                この項目は評価中です。今後のバージョンで大きく変更または削除される可能性があります。
               </n-tooltip>
             </div>
             <div v-if="item.desc">
@@ -242,7 +242,7 @@ const handleSave = () => {
               :options="item.options"
               class="w-36"
             />
-            <!-- 关注玩家 -->
+            <!-- ウォッチリスト -->
             <div v-else-if="item.type === 'watched-players'" class="w-96 ml-1">
               <div
                 v-for="(wp, wpIndex) in formConfig.watched_players"
@@ -252,19 +252,19 @@ const handleSave = () => {
                 <n-input
                   v-model:value="wp.name"
                   class="flex-1"
-                  title="玩家名"
-                  placeholder="玩家名"
+                  title="プレイヤー名"
+                  placeholder="プレイヤー名"
                 />
                 <n-input
                   v-model:value="wp.note"
                   class="max-w-44"
-                  title="备注(选填)"
-                  placeholder="备注(选填)"
+                  title="メモ(任意)"
+                  placeholder="メモ(任意)"
                 />
                 <n-button
                   ghost
                   type="error"
-                  title="删除该行"
+                  title="この行を削除"
                   @click="handleRemoveWatchedPlayer(wpIndex)"
                 >
                   <template #icon><n-icon><RemoveRound /></n-icon></template>
@@ -273,7 +273,7 @@ const handleSave = () => {
               <div v-if="formConfig.watched_players.length < item.maxCount" class="flex items-center justify-end w-full">
                 <n-button type="primary" class="w-32" @click="handleAddWatchedPlayer">
                   <template #icon><n-icon><AddRound /></n-icon></template>
-                  添加关注
+                  追加
                 </n-button>
               </div>
             </div>

@@ -12,13 +12,13 @@ const {
 const winRateTabs = computed(() => {
   const tabs: [string, string][] = []
   if (statistics.value.winRateSummary.frontline) {
-    tabs.push(['frontline', '纷争前线'])
+    tabs.push(['frontline', 'フロントライン'])
   }
   if (statistics.value.winRateSummary.rivalWings) {
-    tabs.push(['rivalWings', '烈羽争锋'])
+    tabs.push(['rivalWings', 'ライバルウィングズ'])
   }
   if (statistics.value.winRateSummary.crystalConflict) {
-    tabs.push(['crystalConflict', '水晶冲突'])
+    tabs.push(['crystalConflict', 'クリスタルコンフリクト'])
   }
   return tabs
 })
@@ -34,9 +34,9 @@ watch(winRateTabs, (newTabs) => {
 }, { immediate: true })
 
 const knockoutChartTabs = computed(() => [
-  [ 'skill', '按技能', statistics.value.pieData.knockoutBySkill ],
-  [ 'selfJob', '按自身职业', statistics.value.pieData.knockoutBySelfJob ],
-  [ 'enemyJob', '按敌方职业', statistics.value.pieData.knockoutByEnemyJob ],
+  [ 'skill', 'スキル別', statistics.value.pieData.knockoutBySkill ],
+  [ 'selfJob', '自ジョブ別', statistics.value.pieData.knockoutBySelfJob ],
+  [ 'enemyJob', '相手ジョブ別', statistics.value.pieData.knockoutByEnemyJob ],
 ] as [string, string, { label: string; amount: number }[]][])
 const activeKnockoutChartTab = ref(knockoutChartTabs.value![0]![0])
 const currKnockoutChartData = computed(() =>
@@ -44,9 +44,9 @@ const currKnockoutChartData = computed(() =>
 )
 
 const deathChartTabs = computed(() => [
-  [ 'skill', '按技能', statistics.value.pieData.deathBySkill ],
-  [ 'selfJob', '按自身职业', statistics.value.pieData.deathBySelfJob ],
-  [ 'enemyJob', '按敌方职业', statistics.value.pieData.deathByEnemyJob ],
+  [ 'skill', 'スキル別', statistics.value.pieData.deathBySkill ],
+  [ 'selfJob', '自ジョブ別', statistics.value.pieData.deathBySelfJob ],
+  [ 'enemyJob', '相手ジョブ別', statistics.value.pieData.deathByEnemyJob ],
 ] as [string, string, { label: string; amount: number }[]][])
 const activeDeathChartTab = ref(deathChartTabs.value![0]![0])
 const currDeathChartData = computed(() =>
@@ -56,19 +56,19 @@ const currDeathChartData = computed(() =>
 
 <template>
   <div class="page-panel">
-    <AlertTitle v-if="!combatData.frontlineLog.length" msg="暂无记录。请完成至少一场对战后再来查看。" />
+    <AlertTitle v-if="!combatData.frontlineLog.length" msg="記録がありません。少なくとも1試合を完了してから確認してください。" />
 
-    <!-- 参战统计 -->
-    <ContentBlock title="参战统计" use-custom-content-container>
+    <!-- 参戦統計 -->
+    <ContentBlock title="参戦統計" use-custom-content-container>
       <template #title>
-        参战统计
+        参戦統計
         <div class="ml-auto mr-5 flex items-center gap-1">
           <div class="w-[4.5rem] text-right">K</div>
           <div class="w-[4.5rem] text-right">D</div>
         </div>
       </template>
 
-      <div class="page-content" v-if="!combatData.frontlineLog.length">暂无数据</div>
+      <div class="page-content" v-if="!combatData.frontlineLog.length">データがありません</div>
       <div class="flex flex-col gap-1" v-else>
         <CombatLogCard
           v-for="(log, index) in combatData.frontlineLog"
@@ -78,20 +78,20 @@ const currDeathChartData = computed(() =>
       </div>
     </ContentBlock>
 
-    <!-- K/D统计 -->
-    <ContentBlock title="K/D统计">
+    <!-- K/D統計 -->
+    <ContentBlock title="K/D統計">
       <div class="w-full grid grid-cols-3">
-        <div>参战<span class="text-orange-700">{{ combatData.frontlineLog.length }}</span>场</div>
-        <div>击倒数 <span class="text-orange-700">{{ statistics.knockouts.length }}</span></div>
-        <div>死亡数 <span class="text-orange-700">{{ statistics.deaths.length }}</span></div>
+        <div>参戦 <span class="text-orange-700">{{ combatData.frontlineLog.length }}</span> 試合</div>
+        <div>ノックアウト数 <span class="text-orange-700">{{ statistics.knockouts.length }}</span></div>
+        <div>戦闘不能数 <span class="text-orange-700">{{ statistics.deaths.length }}</span></div>
         <div>K/D <span class="text-orange-700">{{ statistics.kd }}</span></div>
-        <div>场均击倒 <span class="text-orange-700">{{ statistics.knockoutEachMatch }}</span></div>
-        <div>场均死亡 <span class="text-orange-700">{{ statistics.deathEachMatch }}</span></div>
+        <div>平均ノックアウト <span class="text-orange-700">{{ statistics.knockoutEachMatch }}</span></div>
+        <div>平均戦闘不能 <span class="text-orange-700">{{ statistics.deathEachMatch }}</span></div>
       </div>
     </ContentBlock>
 
-    <!-- 结果统计 -->
-    <ContentBlock title="结果统计">
+    <!-- 結果統計 -->
+    <ContentBlock title="結果統計">
       <template v-if="winRateTabs.length > 0">
         <div class="flex items-center gap-1">
           <div
@@ -109,47 +109,47 @@ const currDeathChartData = computed(() =>
         <div class="flex flex-col gap-1">
           <template v-if="activeWinRateTab === 'frontline' && statistics.winRateSummary.frontline">
             <div>
-              冠军场次：<span class="text-orange-700">{{ statistics.winRateSummary.frontline.first.count }}</span>
+              1位回数: <span class="text-orange-700">{{ statistics.winRateSummary.frontline.first.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.frontline.first.rate }}</span>%)
             </div>
             <div>
-              亚军场次：<span class="text-orange-700">{{ statistics.winRateSummary.frontline.second.count }}</span>
+              2位回数: <span class="text-orange-700">{{ statistics.winRateSummary.frontline.second.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.frontline.second.rate }}</span>%)
             </div>
             <div>
-              季军场次：<span class="text-orange-700">{{ statistics.winRateSummary.frontline.third.count }}</span>
+              3位回数: <span class="text-orange-700">{{ statistics.winRateSummary.frontline.third.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.frontline.third.rate }}</span>%)
             </div>
           </template>
 
           <template v-if="activeWinRateTab === 'rivalWings' && statistics.winRateSummary.rivalWings">
             <div>
-              胜利场次：<span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.win.count }}</span>
+              勝利回数: <span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.win.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.win.rate }}</span>%)
             </div>
             <div>
-              失败场次：<span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.lose.count }}</span>
+              敗北回数: <span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.lose.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.rivalWings.lose.rate }}</span>%)
             </div>
           </template>
 
           <template v-if="activeWinRateTab === 'crystalConflict' && statistics.winRateSummary.crystalConflict">
             <div>
-              胜利场次：<span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.win.count }}</span>
+              勝利回数: <span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.win.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.win.rate }}</span>%)
             </div>
             <div>
-              失败场次：<span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.lose.count }}</span>
+              敗北回数: <span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.lose.count }}</span>
               (<span class="text-orange-700">{{ statistics.winRateSummary.crystalConflict.lose.rate }}</span>%)
             </div>
           </template>
         </div>
       </template>
-      <div v-else class="py-2 flex items-center justify-center">暂无数据</div>
+      <div v-else class="py-2 flex items-center justify-center">データがありません</div>
     </ContentBlock>
 
-    <!-- 击倒统计 -->
-    <ContentBlock title="击倒统计">
+    <!-- ノックアウト統計 -->
+    <ContentBlock title="ノックアウト統計">
       <div class="flex items-center gap-1">
         <div
           v-for="tab in knockoutChartTabs"
@@ -165,12 +165,12 @@ const currDeathChartData = computed(() =>
       <n-divider class="!my-1" />
       <div class="h-60">
         <PieChart v-if="currKnockoutChartData.length" :data="currKnockoutChartData" />
-        <div v-else class="h-full flex items-center justify-center">暂无数据</div>
+        <div v-else class="h-full flex items-center justify-center">データがありません</div>
       </div>
     </ContentBlock>
 
-    <!-- 死亡统计 -->
-    <ContentBlock title="死亡统计">
+    <!-- 戦闘不能統計 -->
+    <ContentBlock title="戦闘不能統計">
       <div class="flex items-center gap-1">
         <div
           v-for="tab in deathChartTabs"
@@ -186,7 +186,7 @@ const currDeathChartData = computed(() =>
       <n-divider class="!my-1" />
       <div class="h-60">
         <PieChart v-if="currDeathChartData.length" :data="currDeathChartData" />
-        <div v-else class="h-full flex items-center justify-center">暂无数据</div>
+        <div v-else class="h-full flex items-center justify-center">データがありません</div>
       </div>
     </ContentBlock>
   </div>

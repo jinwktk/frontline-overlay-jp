@@ -35,8 +35,8 @@ const maxPointCountForPointCard = computed(() => {
       </div>
     </div>
 
-    <!-- 剩余点分 -->
-    <div class="page-title">剩余点分</div>
+    <!-- 残りポイント -->
+    <div class="page-title">残りポイント</div>
     <div class="w-full grid grid-cols-3 gap-2">
       <GcCard
         v-for="company in GrandCompany"
@@ -48,13 +48,13 @@ const maxPointCountForPointCard = computed(() => {
       />
     </div>
 
-    <!-- 当前据点 -->
-    <div class="page-title">当前据点</div>
+    <!-- 現在の拠点 -->
+    <div class="page-title">現在の拠点</div>
     <div
       v-if="combatData.zone === Frontline.shatter"
       class="w-full text-[1.25rem] self-baseline text-white px-1 py-0.5 rounded bg-gray-400/90 border border-black/50"
     >
-      暂不支持解析{{ getFrontlineNames(combatData.zone)[1] }}的当前据点数据。
+      {{ getFrontlineNames(combatData.zone)[1] }} の現在拠点データ解析にはまだ対応していません。
     </div>
     <PointCards
       :points="pointData"
@@ -63,9 +63,9 @@ const maxPointCountForPointCard = computed(() => {
     />
 
 
-    <!-- 关注玩家 -->
+    <!-- ウォッチリスト -->
     <template v-if="combatData.matchedWatchedPlayers.length > 0">
-      <div class="page-title">关注玩家</div>
+      <div class="page-title">ウォッチリスト</div>
       <div
         v-for="(wp, idx) in combatData.matchedWatchedPlayers"
         :key="idx"

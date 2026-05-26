@@ -12,6 +12,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     "baseUrl": ".",
+    "verbatimModuleSyntax": false,
     "paths": {
       "@/*": ["./src/*"],
       "@cactbot/*": ["./external/cactbot/*"],

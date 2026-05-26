@@ -38,6 +38,9 @@ private-folder-alias.json
 # Local OMX workflow state
 .omx/
 
+# Local Playwright MCP artifacts
+.playwright-mcp/
+
 # Cypress
 /cypress/videos/
 /cypress/screenshots/

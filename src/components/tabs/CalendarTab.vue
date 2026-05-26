@@ -95,10 +95,10 @@ const timeUntilNext23 = (now: Date, addDay?: number) => {
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')
   const seconds = Math.floor((diffMs % (1000 * 60)) / 1000).toString().padStart(2, '0')
 
-  return `${hours}小时${minutes}分${seconds}秒`
+  return `${hours}時間${minutes}分${seconds}秒`
 }
 const formatDate = (date: Date) => {
-  return date.toLocaleString('zh-CN', {
+  return date.toLocaleString('ja-JP', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -112,11 +112,11 @@ const formatDate = (date: Date) => {
 
 <template>
   <div class="page-panel">
-    <!-- 当前战场 -->
+    <!-- 現在の戦場 -->
     <div class="page-title">
       <div class="flex w-full items-center">
-        <div>当前战场</div>
-        <div class="ml-auto">{{ `(还剩${timeUntilNext23(now)})` }}</div>
+        <div>現在の戦場</div>
+        <div class="ml-auto">{{ `(残り${timeUntilNext23(now)})` }}</div>
       </div>
     </div>
     <div
@@ -139,8 +139,8 @@ const formatDate = (date: Date) => {
         </p>
       </div>
     </div>
-    <!-- 未来战场 -->
-    <div class="page-title">未来战场</div>
+    <!-- 今後の戦場 -->
+    <div class="page-title">今後の戦場</div>
     <div class="flex flex-col gap-0.5 text-[1.125rem]">
       <div
         v-for="future in futureData"
@@ -156,7 +156,7 @@ const formatDate = (date: Date) => {
           <span>{{ future.names[1] }}</span>
         </div>
         <div class="ml-auto">
-          {{ `${formatDate(getNext23(now, future.val))}／${timeUntilNext23(now, future.val)}后` }}
+          {{ `${formatDate(getNext23(now, future.val))}／${timeUntilNext23(now, future.val)}後` }}
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ const combatData = reactive({
     [GrandCompany.twinadder]: 0,
     [GrandCompany.immoflame]: 0,
   },
-  playerMapName: { 'E0000000': '(场地/dot)' } as Record<string, string>,
+  playerMapName: { 'E0000000': '(フィールド/dot)' } as Record<string, string>,
   playerMapJob: {} as Record<string, number>,
   playerMapFull: {} as Record<string, OverlayCombatant>,
   pointMap: {} as Record<string, PointInfo | StaticPointInfo | InitialPointInfo>,
@@ -364,7 +364,7 @@ const useCombatParser = () => {
       })
       combatData.prePoints.length = 0
       combatData.playerMapName = {
-        'E0000000': '(场地/dot)',
+        'E0000000': '(フィールド/dot)',
       }
       combatData.playerMapJob = {}
       combatData.playerMapFull = {}
@@ -742,11 +742,11 @@ const useCombatParser = () => {
           if (hitActionId) {
             // 记录好人
             const goodActions = [
-              '718A'/*卫护*/, '71A5'/*至黑之夜*/, 'A1E3'/*刚玉之心*/,
-              'A8F7'/*疗愈*/, '7228'/*救疗*/, '722B'/*水流幕*/, '7230'/*鼓舞激励之策*/,
+              '718A'/*かばう*/, '71A5'/*至黑之夜*/, 'A1E3'/*刚玉之心*/,
+              'A8F7'/*疗愈*/, '7228'/*ケアルラ*/, '722B'/*アクアヴェール*/, '7230'/*鼓舞激励之策*/,
               '723B'/*吉星相位*/, '723F'/*吉星相位2*/, '7250'/*心关*/,
               'A8F2'/*勇气*/, '72D8'/*光阴神的礼赞凯歌*/, '72F7'/*闭式舞姿*/,
-              '73E6'/*守护之光*/, '7344'/*命水*/,
+              '73E6'/*守りの光*/, '7344'/*命水*/,
             ]
             if (goodActions.includes(hitActionId) || goodActions.includes(hitActionName)) {
               if (victimId === combatData.playerId && perpetratorId !== combatData.playerId) {
@@ -769,8 +769,8 @@ const useCombatParser = () => {
             }
             // 记录坏人
             const badActions = [
-              'A8ED'/*全力挥打*/, '7199'/*献身*/, '732D'/*陨石冲击*/,
-              '72E7'/*魔弹射手*/, '72DF'/*空气锚*/,
+              'A8ED'/*シールドバッシュ*/, '7199'/*ブロート*/, '732D'/*メテオドライヴ*/,
+              '72E7'/*魔弾の射手*/, '72DF'/*空气锚*/,
               '72D3'/*默者的夜曲*/, 'A1FB'/*英雄的返场余音*/, '72D2'/*爆破箭*/,
               '72F8'/*行列舞*/
               // 'A226'/*昏沉*/,
@@ -1082,15 +1082,15 @@ const useCombatParser = () => {
 
   const situationLockMsg = computed(() => {
     if (!combatData.onConflict && !combatData.zone){
-      return '还未进入对战'
+      return 'まだ対戦に入っていません'
     } else if (!combatData.onConflict) {
-      return '正在等待战斗开始'
+      return '対戦開始を待っています'
     } else if (combatData.zone === Frontline.shatter) {
-      return '暂不支持解析 ' + getFrontlineNames(combatData.zone)[1] + ' 的战况数据'
+      return getFrontlineNames(combatData.zone)[1] + ' の戦況データ解析にはまだ対応していません'
     } else if (combatData.zone === RivalWings.hiddengorge) {
-      return '暂不支持解析 烈羽争锋 的战况数据'
+      return 'ライバルウィングズの戦況データ解析にはまだ対応していません'
     } else if (Object.values(CrystalConflict).includes(combatData.zone as CrystalConflict)) {
-      return '暂不支持解析 水晶冲突 的战况数据'
+      return 'クリスタルコンフリクトの戦況データ解析にはまだ対応していません'
     }
     return false
   })
@@ -1106,10 +1106,10 @@ const useCombatParser = () => {
       sortValue?: number
     }[] = Object.entries(combatData.pointMap).map(([key, val]) => {
       let ptName = ''
-      if (combatData.zone === Frontline.seize) ptName = '亚拉戈石文'
-      else if (combatData.zone === Frontline.shatter) ptName = '冰封的石文'
-      else if (combatData.zone === Frontline.naadam) ptName = '无垢的大地'
-      else if (combatData.zone === Frontline.triumph) ptName = '战略目标点'
+      if (combatData.zone === Frontline.seize) ptName = 'アラガントームリス'
+      else if (combatData.zone === Frontline.shatter) ptName = 'アイスドトームリス'
+      else if (combatData.zone === Frontline.naadam) ptName = '無垢の大地'
+      else if (combatData.zone === Frontline.triumph) ptName = '戦略目標'
       ptName += key
 
       // 计算排序权重
@@ -1123,7 +1123,7 @@ const useCombatParser = () => {
           type: 'neutrality',
           ptLv: val.ptLv,
           ptName: ptName,
-          ptDescription: '中立' + (val.time ? ('／还需 ' + val.time.remain.toString() + 's') : ('／剩余 ' + val.ptTotal.toString())),
+          ptDescription: '中立' + (val.time ? ('／残り ' + val.time.remain.toString() + 's') : ('／残量 ' + val.ptTotal.toString())),
           sortValue
         }
       } else if (val.type === 'static') {
@@ -1143,7 +1143,7 @@ const useCombatParser = () => {
           ptLv: val.ptLv,
           ptName: ptName,
           ptProgress: val.ptRemain / val.ptTotal * 100,
-          ptDescription: (val.paused ? '中立': getGrandCompanyName(val.owner)) + '／剩余 ' + val.ptRemain.toString(),
+          ptDescription: (val.paused ? '中立': getGrandCompanyName(val.owner)) + '／残量 ' + val.ptRemain.toString(),
           sortValue
         }
       }
@@ -1153,9 +1153,9 @@ const useCombatParser = () => {
         key: `prePoints-${val.key}`,
         type: 'preparing',
         ptLv: '?',
-        ptName: '即将刷新',
+        ptName: 'まもなく出現',
         ptProgress: val.tRemain / val.tTotal * 100,
-        ptDescription: '还需 ' + val.tRemain.toString() + 's',
+        ptDescription: '残り ' + val.tRemain.toString() + 's',
         sortValue: 120 - val.tRemain // 使用战场点分平均值作为期望
       })
     })
@@ -1333,18 +1333,18 @@ const useCombatParser = () => {
     combatData.prePoints.push(createPrePoint('A4', 15))
     combatData.matchedWatchedPlayers = [
       {
-        name: '无辜路人01',
-        note: '大饼',
-        worldName: '红玉海',
+        name: '通りすがり01',
+        note: '要注意',
+        worldName: 'Chocobo',
       },
       {
-        name: '最长就六个字',
-        note: '四小',
-        worldName: '静语庄园',
+        name: '六文字の人',
+        note: 'メモ',
+        worldName: 'Bahamut',
       },
       {
-        name: '无辜路人03',
-        note: '不认识',
+        name: '通りすがり03',
+        note: '未確認',
         worldName: '',
       },
     ]
@@ -1354,22 +1354,22 @@ const useCombatParser = () => {
     combatData.allPlayersDeaths = [
       {
         happenTime: Date.now(),
-        victimName: '无辜路人01',
+        victimName: '通りすがり01',
         victimJob: 24,
         summonedBy: combatData.playerName,
-        perpetratorName: '亚灵神巴哈姆特',
+        perpetratorName: 'バハムート',
         perpetratorJob: 42,
-        lasthitActionName: '百万核爆',
+        lasthitActionName: 'メガフレア',
         lasthitActionDamage: 11627,
         lasthitActionInstantDeath: false,
       },
       {
         happenTime: Date.now() + timeGap,
-        victimName: '无辜路人02',
+        victimName: '通りすがり02',
         victimJob: 19,
         perpetratorName: combatData.playerName,
         perpetratorJob: 42,
-        lasthitActionName: '山崩',
+        lasthitActionName: 'ランドスライド',
         lasthitActionDamage: 6742,
         lasthitActionInstantDeath: false,
       },
@@ -1377,39 +1377,39 @@ const useCombatParser = () => {
         happenTime: Date.now() + timeGap * 2,
         victimName: combatData.playerName,
         victimJob: 42,
-        perpetratorName: '某个忍者',
+        perpetratorName: 'とある忍者',
         perpetratorJob: 30,
-        lasthitActionName: '星遁天诛',
+        lasthitActionName: '星遁天誅',
         lasthitActionDamage: 0,
         lasthitActionInstantDeath: true,
       },
       {
         happenTime: Date.now() + timeGap * 3,
-        victimName: '无辜路人03',
+        victimName: '通りすがり03',
         victimJob: 20,
         perpetratorName: combatData.playerName,
         perpetratorJob: 42,
-        lasthitActionName: '死星核爆',
+        lasthitActionName: 'デッドスターバースト',
         lasthitActionDamage: 9144,
         lasthitActionInstantDeath: false,
       },
       {
         happenTime: Date.now() + timeGap * 4,
-        victimName: '无辜路人04',
+        victimName: '通りすがり04',
         victimJob: 21,
         perpetratorName: combatData.playerName,
         perpetratorJob: 42,
-        lasthitActionName: '毁绝',
+        lasthitActionName: 'コメット',
         lasthitActionDamage: 2415,
         lasthitActionInstantDeath: false,
       },
       {
         happenTime: Date.now() + timeGap * 5,
-        victimName: '无辜路人05',
+        victimName: '通りすがり05',
         victimJob: 22,
         perpetratorName: combatData.playerName,
         perpetratorJob: 42,
-        lasthitActionName: '彗星',
+        lasthitActionName: 'コメット',
         lasthitActionDamage: 8921,
         lasthitActionInstantDeath: false,
       },
@@ -1417,9 +1417,9 @@ const useCombatParser = () => {
         happenTime: Date.now() + timeGap * 2,
         victimName: combatData.playerName,
         victimJob: 42,
-        perpetratorName: '某个机工',
+        perpetratorName: 'とある機工士',
         perpetratorJob: 31,
-        lasthitActionName: '魔弹射手',
+        lasthitActionName: '魔弾の射手',
         lasthitActionDamage: 22174,
         lasthitActionInstantDeath: false,
       },
@@ -1427,10 +1427,10 @@ const useCombatParser = () => {
         happenTime: Date.now() + timeGap * 2,
         victimName: combatData.playerName,
         victimJob: 42,
-        summonedBy: '某个召唤',
-        perpetratorName: '亚灵神巴哈姆特',
+        summonedBy: 'とある召喚士',
+        perpetratorName: 'バハムート',
         perpetratorJob: 27,
-        lasthitActionName: '百万核爆',
+        lasthitActionName: 'メガフレア',
         lasthitActionDamage: 11946,
         lasthitActionInstantDeath: false,
       },
@@ -1440,67 +1440,67 @@ const useCombatParser = () => {
     combatData.goodboys = [
       {
         happenTime: Date.now(),
-        targetName: '好心白魔',
+        targetName: '親切な白魔道士',
         targetJob: 24,
-        actionName: '水流幕',
+        actionName: 'アクアヴェール',
         actionDamage: 0,
       },
       {
         happenTime: Date.now() + timeGap * 1,
-        targetName: '好心召唤',
+        targetName: '親切な召喚士',
         targetJob: 27,
-        actionName: '守护之光',
+        actionName: '守りの光',
         actionDamage: 0,
       },
       {
         happenTime: Date.now() + timeGap * 2,
-        targetName: '骑士',
+        targetName: 'ナイト',
         targetJob: 19,
-        actionName: '卫护',
+        actionName: 'かばう',
         actionDamage: 0,
       },
       {
         happenTime: Date.now() + timeGap * 3,
-        targetName: '好心白魔',
+        targetName: '親切な白魔道士',
         targetJob: 24,
-        actionName: '救疗',
+        actionName: 'ケアルラ',
         actionDamage: 12000,
       },
     ]
     combatData.badboys = [
       {
         happenTime: Date.now() + timeGap * 4,
-        targetName: '狗战士',
+        targetName: '敵戦士',
         targetJob: 21,
-        actionName: '献身',
+        actionName: 'ブロート',
         actionDamage: 0,
       },
       {
         happenTime: Date.now() + timeGap * 5,
-        targetName: '狗骑士',
+        targetName: '狗ナイト',
         targetJob: 19,
-        actionName: '全力挥打',
+        actionName: 'シールドバッシュ',
         actionDamage: 1260,
       },
       {
         happenTime: Date.now() + timeGap * 6,
-        targetName: '狗武僧',
+        targetName: '敵モンク',
         targetJob: 20,
-        actionName: '陨石冲击',
+        actionName: 'メテオドライヴ',
         actionDamage: 11842,
       },
       {
         happenTime: Date.now() + timeGap * 7,
-        targetName: '组排机工1',
+        targetName: '敵機工士1',
         targetJob: 31,
-        actionName: '魔弹射手',
+        actionName: '魔弾の射手',
         actionDamage: 16742,
       },
       {
         happenTime: Date.now() + timeGap * 7,
-        targetName: '组排机工2',
+        targetName: '敵機工士2',
         targetJob: 31,
-        actionName: '魔弹射手',
+        actionName: '魔弾の射手',
         actionDamage: 24716,
       },
     ]

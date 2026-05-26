@@ -15,10 +15,10 @@ const {
 
 const hidePlayerName = ref(false)
 const insideTabs = computed(() => [
-  [ 'goodboys', '受恩', '他人对你发动的关键援护技能', combatData.goodboys ],
-  [ 'badboys', '蒙怨', '他人对你发动的关键阻碍技能', combatData.badboys ],
-  [ 'mygoods', '施恩', '你对他人发动的关键援护技能', combatData.mygoods ],
-  [ 'mybads', '结怨', '你对他人发动的关键阻碍技能', combatData.mybads ],
+  [ 'goodboys', '被支援', '他プレイヤーがあなたに使用した重要支援スキル', combatData.goodboys ],
+  [ 'badboys', '被妨害', '他プレイヤーがあなたに使用した重要妨害スキル', combatData.badboys ],
+  [ 'mygoods', '支援', 'あなたが他プレイヤーに使用した重要支援スキル', combatData.mygoods ],
+  [ 'mybads', '妨害', 'あなたが他プレイヤーに使用した重要妨害スキル', combatData.mybads ],
 ] as [string, string, string, SelfActionLog[]][])
 const activeTab = ref(insideTabs.value![0]![0])
 
@@ -32,11 +32,11 @@ const getSelfActionLogDamage = (log: SelfActionLog) => {
   return log.actionDamage.toLocaleString()
 }
 
-const switchShowPlayerNameButtonActionText = computed(() => hidePlayerName.value ? '显示' : '隐藏')
+const switchShowPlayerNameButtonActionText = computed(() => hidePlayerName.value ? '表示' : '非表示')
 const handleSwitchShowPlayerName = () => {
   const act = switchShowPlayerNameButtonActionText.value
   hidePlayerName.value = !hidePlayerName.value
-  NAIVE_UI_MESSAGE.info(`已${act}玩家名称`)
+  NAIVE_UI_MESSAGE.info(`プレイヤー名を${act}にしました`)
 }
 </script>
 
@@ -58,8 +58,8 @@ const handleSwitchShowPlayerName = () => {
     </div>
     <n-divider class="!my-1 shrink-0"></n-divider>
     <div class="w-full flex flex-col gap-0.5 flex-1 min-h-0 overflow-y-auto">
-      <div v-if="!currSelfActionLogs.length" class="page-title">暂无数据</div>
-      <AlertTitle v-else-if="!combatData.zone && !combatData.onConflict" msg="此处展示的是上一场的记录，下次进入对战时会被清除。" />
+      <div v-if="!currSelfActionLogs.length" class="page-title">データがありません</div>
+      <AlertTitle v-else-if="!combatData.zone && !combatData.onConflict" msg="ここには前回の記録を表示しています。次回の対戦開始時に消去されます。" />
       <div
         v-for="(log, logIndex) in currSelfActionLogs"
         :key="`${activeTab}-${logIndex}`"
@@ -72,26 +72,27 @@ const handleSwitchShowPlayerName = () => {
               <JobSpan v-if="log.targetJob" :job="log.targetJob" />
               <span class="text-orange-700" :class="hidePlayerName ? 'blur' : ''">{{ log.targetName }}</span>
             </div>
-            <span>对你发动了</span>
+            <span>があなたに</span>
             <span class="text-orange-700">{{ log.actionName }}</span>
+            <span>を使用しました</span>
             <template v-if="log.actionDamage">
-              <span>，回复了</span>
+              <span>、</span>
               <span class="text-orange-700">{{ log.actionDamage.toLocaleString() }}</span>
-              <span>体力</span>
+              <span>HP回復</span>
             </template>
           </template>
           <template v-else-if="activeTab === 'mygoods'">
-            <span>对</span>
+            <span>対象:</span>
             <div class="flex items-center">
               <JobSpan v-if="log.targetJob" :job="log.targetJob" />
               <span class="text-orange-700" :class="hidePlayerName ? 'blur' : ''">{{ log.targetName }}</span>
             </div>
-            <span>发动了</span>
+            <span>に使用:</span>
             <span class="text-orange-700">{{ log.actionName }}</span>
             <template v-if="log.actionDamage">
-              <span>，回复了</span>
+              <span>、</span>
               <span class="text-orange-700">{{ log.actionDamage.toLocaleString() }}</span>
-              <span>体力</span>
+              <span>HP回復</span>
             </template>
           </template>
           <template v-else-if="activeTab === 'badboys'">
@@ -99,26 +100,27 @@ const handleSwitchShowPlayerName = () => {
               <JobSpan v-if="log.targetJob" :job="log.targetJob" />
               <span class="text-orange-700" :class="hidePlayerName ? 'blur' : ''">{{ log.targetName }}</span>
             </div>
-            <span>对你发动了</span>
+            <span>があなたに</span>
             <span class="text-orange-700">{{ log.actionName }}</span>
+            <span>を使用しました</span>
             <template v-if="log.actionDamage">
-              <span>，造成了</span>
+              <span>、</span>
               <span class="text-orange-700">{{ getSelfActionLogDamage(log) }}</span>
-              <span>伤害</span>
+              <span>ダメージ</span>
             </template>
           </template>
           <template v-else-if="activeTab === 'mybads'">
-            <span>对</span>
+            <span>対象:</span>
             <div class="flex items-center">
               <JobSpan v-if="log.targetJob" :job="log.targetJob" />
               <span class="text-orange-700" :class="hidePlayerName ? 'blur' : ''">{{ log.targetName }}</span>
             </div>
-            <span>发动了</span>
+            <span>に使用:</span>
             <span class="text-orange-700">{{ log.actionName }}</span>
             <template v-if="log.actionDamage">
-              <span>，造成了</span>
+              <span>、</span>
               <span class="text-orange-700">{{ getSelfActionLogDamage(log) }}</span>
-              <span>伤害</span>
+              <span>ダメージ</span>
             </template>
           </template>
         </div>
@@ -138,7 +140,7 @@ const handleSwitchShowPlayerName = () => {
           </n-icon>
         </n-float-button>
       </template>
-      <div class="text-[1.2rem]">{{ switchShowPlayerNameButtonActionText }}玩家名称</div>
+      <div class="text-[1.2rem]">プレイヤー名を{{ switchShowPlayerNameButtonActionText }}</div>
     </n-tooltip>
   </div>
 </template>

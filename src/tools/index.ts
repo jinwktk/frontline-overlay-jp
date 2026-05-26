@@ -85,7 +85,7 @@ export const copyImageToClipboard = async (src: string) => {
       range.selectNode(img)
       const selection = window.getSelection()
       if (!selection) {
-        reject(new Error('无法获取 selection 对象'))
+        reject(new Error('selection オブジェクトを取得できません'))
         return
       }
       selection.removeAllRanges()
@@ -96,10 +96,10 @@ export const copyImageToClipboard = async (src: string) => {
       selection.removeAllRanges()
 
       if (ok) resolve("OK")
-      else reject(new Error('execCommand copy 失败'))
+      else reject(new Error('execCommand copy に失敗しました'))
     }
 
-    img.onerror = () => reject(new Error('图片加载失败'))
+    img.onerror = () => reject(new Error('画像の読み込みに失敗しました'))
 
     img.src = src
   })
@@ -135,7 +135,7 @@ export const formatTimeDurationText = (ts: number) => {
   const secondsForShow = hours || minutes ? pad(seconds) : seconds
 
   if (hours > 0) {
-    return `${hours}小时${minutesForShow}分${secondsForShow}秒`
+    return `${hours}時間${minutesForShow}分${secondsForShow}秒`
   } else if (minutes > 0) {
     return `${minutesForShow}分${secondsForShow}秒`
   } else {
@@ -145,9 +145,9 @@ export const formatTimeDurationText = (ts: number) => {
 
 export const getGrandCompanyName = (gc: GrandCompany) => {
   switch (gc) {
-    case GrandCompany.maelstrom: return '黑涡团'
+    case GrandCompany.maelstrom: return '黒渦団'
     case GrandCompany.twinadder: return '双蛇党'
-    case GrandCompany.immoflame: return '恒辉队'
+    case GrandCompany.immoflame: return '不滅隊'
   }
 }
 
@@ -174,49 +174,49 @@ export const getJobInfo = (job: number | undefined) => {
   let job_name = '', job_icon = ''
   switch (job) {
     case 19:
-      job_name = '骑士'; job_icon = 'paladin'; break
+      job_name = 'ナイト'; job_icon = 'paladin'; break
     case 20:
-      job_name = '武僧'; job_icon = 'monk'; break
+      job_name = 'モンク'; job_icon = 'monk'; break
     case 21:
-      job_name = '战士'; job_icon = 'warrior'; break
+      job_name = '戦士'; job_icon = 'warrior'; break
     case 22:
-      job_name = '龙骑士'; job_icon = 'dragoon'; break
+      job_name = '竜騎士'; job_icon = 'dragoon'; break
     case 23:
-      job_name = '吟游诗人'; job_icon = 'bard'; break
+      job_name = '吟遊詩人'; job_icon = 'bard'; break
     case 24:
-      job_name = '白魔法师'; job_icon = 'whitemage'; break
+      job_name = '白魔道士'; job_icon = 'whitemage'; break
     case 25:
-      job_name = '黑魔法师'; job_icon = 'blackmage'; break
+      job_name = '黒魔道士'; job_icon = 'blackmage'; break
     case 27:
-      job_name = '召唤师'; job_icon = 'summoner'; break
+      job_name = '召喚士'; job_icon = 'summoner'; break
     case 28:
       job_name = '学者'; job_icon = 'scholar'; break
     case 30:
       job_name = '忍者'; job_icon = 'ninja'; break
     case 31:
-      job_name = '机工士'; job_icon = 'machinist'; break
+      job_name = '機工士'; job_icon = 'machinist'; break
     case 32:
-      job_name = '暗黑骑士'; job_icon = 'darkknight'; break
+      job_name = '暗黒騎士'; job_icon = 'darkknight'; break
     case 33:
-      job_name = '占星术士'; job_icon = 'astrologian'; break
+      job_name = '占星術師'; job_icon = 'astrologian'; break
     case 34:
-      job_name = '武士'; job_icon = 'samurai'; break
+      job_name = '侍'; job_icon = 'samurai'; break
     case 35:
-      job_name = '赤魔法师'; job_icon = 'redmage'; break
+      job_name = '赤魔道士'; job_icon = 'redmage'; break
     case 37:
-      job_name = '绝枪战士'; job_icon = 'gunbreaker'; break
+      job_name = 'ガンブレイカー'; job_icon = 'gunbreaker'; break
     case 38:
-      job_name = '舞者'; job_icon = 'dancer'; break
+      job_name = '踊り子'; job_icon = 'dancer'; break
     case 39:
-      job_name = '钐镰客'; job_icon = 'reaper'; break
+      job_name = 'リーパー'; job_icon = 'reaper'; break
     case 40:
-      job_name = '贤者'; job_icon = 'sage'; break
+      job_name = '賢者'; job_icon = 'sage'; break
     case 41:
-      job_name = '蝰蛇剑士'; job_icon = 'viper'; break
+      job_name = 'ヴァイパー'; job_icon = 'viper'; break
     case 42:
-      job_name = '绘灵法师'; job_icon = 'pictomancer'; break
+      job_name = 'ピクトマンサー'; job_icon = 'pictomancer'; break
     default:
-      job_name = '未知'; job_icon = 'none'; break
+      job_name = '不明'; job_icon = 'none'; break
   }
   return { job_name, job_icon }
 }
@@ -227,18 +227,18 @@ export const getJobInfo = (job: number | undefined) => {
  */
 export const getFrontlineNames = (fl: PvPBattle) => {
   switch (fl) {
-    case Frontline.secure: return ['阵地', '周边遗迹群', '阵地战'] as const
-    case Frontline.seize: return ['尘封', '尘封秘岩', '争夺战'] as const
-    case Frontline.shatter: return ['碎冰', '荣誉野', '碎冰战'] as const
-    case Frontline.naadam: return ['草原', '昂萨哈凯尔', '竞争战'] as const
-    case Frontline.triumph: return ['高原', '沃刻其特', '演习战'] as const
-    case RivalWings.hiddengorge: return ['隐塞', '隐塞', '机动战'] as const
-    case CrystalConflict.palaistra: return ['学校', '角力学校', '水晶冲突'] as const
-    case CrystalConflict.cloudnine: return ['九霄', '九霄云上', '水晶冲突'] as const
-    case CrystalConflict.volcanic: return ['火山', '火山之心', '水晶冲突'] as const
-    case CrystalConflict.castletown: return ['大殿', '机关大殿', '水晶冲突'] as const
-    case CrystalConflict.redsands: return ['沙漠', '赤土红沙', '水晶冲突'] as const
-    case CrystalConflict.bayside: return ['海岸', '海岸斗场', '水晶冲突'] as const
+    case Frontline.secure: return ['制圧', '外縁遺跡群', '制圧戦'] as const
+    case Frontline.seize: return ['争奪', 'シールロック', '争奪戦'] as const
+    case Frontline.shatter: return ['砕氷', 'フィールド・オブ・グローリー', '砕氷戦'] as const
+    case Frontline.naadam: return ['終節', 'オンサル・ハカイル', '終節戦'] as const
+    case Frontline.triumph: return ['演習', '沃刻其特', '演習戦'] as const
+    case RivalWings.hiddengorge: return ['ヒドゥンゴージ', 'ヒドゥンゴージ', '機工戦'] as const
+    case CrystalConflict.palaistra: return ['パライストラ', 'パライストラ', 'クリスタルコンフリクト'] as const
+    case CrystalConflict.cloudnine: return ['クラウドナイン', 'クラウドナイン', 'クリスタルコンフリクト'] as const
+    case CrystalConflict.volcanic: return ['ヴォルカニック・ハート', 'ヴォルカニック・ハート', 'クリスタルコンフリクト'] as const
+    case CrystalConflict.castletown: return ['東方絡繰御殿', '東方絡繰御殿', 'クリスタルコンフリクト'] as const
+    case CrystalConflict.redsands: return ['レッド・サンズ', 'レッド・サンズ', 'クリスタルコンフリクト'] as const
+    case CrystalConflict.bayside: return ['ベイサイド', 'ベイサイド・バトルグラウンド', 'クリスタルコンフリクト'] as const
   }
 }
 

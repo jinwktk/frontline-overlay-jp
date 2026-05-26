@@ -33,7 +33,7 @@ const flag = computed(() => getGrandCompanyFlag(props.gc))
         <div class="text-[1.75rem] leading-[1.2] font-medium text-white drop-shadow-[1px_1px_2px_black]">
           {{ name }}
         </div>
-        <p class="text-[#cad5e2] m-0 leading-1">{{ me ? '⭐我方' : '　敌方' }}</p>
+        <p class="text-[#cad5e2] m-0 leading-1">{{ me ? '⭐味方' : '　敵方' }}</p>
       </div>
       <div class="ml-auto mr-1 text-[2.625rem] leading-[1.3] font-bold text-white">
         {{ floatPoints }}

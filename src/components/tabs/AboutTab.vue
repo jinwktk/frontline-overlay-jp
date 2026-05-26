@@ -28,12 +28,12 @@ const contactData = computed(() => [
     },
     onClickCopyBtn: () => {
       copyToClipboard(AppInfo.githubRepo)
-      NAIVE_UI_MESSAGE.success('已复制链接')
+      NAIVE_UI_MESSAGE.success('リンクをコピーしました')
     },
   },
   {
     key: 'changelogDoc',
-    label: '更新日志',
+    label: '更新履歴',
     icon: EventNoteFilled,
     data: AppInfo.changelogDoc,
     onClick: () => {
@@ -41,7 +41,7 @@ const contactData = computed(() => [
     },
     onClickCopyBtn: () => {
       copyToClipboard(AppInfo.changelogDoc)
-      NAIVE_UI_MESSAGE.success('已复制链接')
+      NAIVE_UI_MESSAGE.success('リンクをコピーしました')
     },
   }
 ])
@@ -53,20 +53,20 @@ const checkAppUpdate = async () => {
     if (needUpdate) appNewVersion.value = latestVersion
     else appNewVersion.value = ''
   } catch (e) {
-    console.error('检查应用新版本时发生错误：', e)
+    console.error('アプリの更新確認中にエラーが発生しました:', e)
   } finally {
     checkingAppUpdate.value = false
   }
 }
 const handleCheckAppUpdate = async () => {
   if (checkingAppUpdate.value) {
-    NAIVE_UI_MESSAGE.info('正在检测中，请稍候'); return
+    NAIVE_UI_MESSAGE.info('確認中です。しばらくお待ちください'); return
   }
   await checkAppUpdate()
   if (appNewVersion.value) {
-    NAIVE_UI_MESSAGE.info('检测到新版本')
+    NAIVE_UI_MESSAGE.info('新しいバージョンがあります')
   } else {
-    NAIVE_UI_MESSAGE.info('已是最新版本')
+    NAIVE_UI_MESSAGE.info('最新バージョンです')
   }
 }
 const handleUpdateApp = async () => {
@@ -81,12 +81,12 @@ const handleUpdateApp = async () => {
 <template>
   <div class="page-panel">
     <div class="page-title">
-      <span>当前版本：</span>
+      <span>現在のバージョン:</span>
       <span class="text-orange-700 font-bold">{{ AppInfo.version }}</span>
     </div>
     <div class="page-content flex-col items-start pb-[0.375rem]">
       <template v-if="appNewVersion">
-        <div>检测到新版本：{{ appNewVersion }}</div>
+        <div>新しいバージョン: {{ appNewVersion }}</div>
         <n-button
           size="large"
           type="success"
@@ -94,12 +94,12 @@ const handleUpdateApp = async () => {
           :loading="checkingAppUpdate"
           @click="handleUpdateApp"
         >
-          点此更新
+          更新する
         </n-button>
-        <div class="text-red-600">※当前对战的数据将会丢失。</div>
+        <div class="text-red-600">※現在の対戦データは失われます。</div>
       </template>
       <template v-else>
-        <div>已是最新版本</div>
+        <div>最新バージョンです</div>
         <n-button
           size="large"
           type="info"
@@ -107,13 +107,13 @@ const handleUpdateApp = async () => {
           :loading="checkingAppUpdate"
           @click="handleCheckAppUpdate"
         >
-          检查更新
+          更新を確認
         </n-button>
       </template>
     </div>
-    <div class="page-title">保持联系</div>
+    <div class="page-title">リンク</div>
     <div class="page-content">
-      <div>点击左侧按钮来打开子窗口访问，或是点击右侧按钮复制链接。</div>
+      <div>左のボタンで別ウィンドウを開き、右のボタンでリンクをコピーします。</div>
       <div class="grid grid-cols-[1fr_auto] gap-1 w-fit">
         <div v-for="contact in contactData" :key="contact.key" class="contents">
           <n-button size="large" type="info" class="px-12 text-[1.25rem]" @click="contact.onClick">

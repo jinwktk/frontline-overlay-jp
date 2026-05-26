@@ -27,15 +27,15 @@ const frontlineName = computed(() => getFrontlineNames(props.frontlineLog.zone)[
 const frontlineResult = computed(() => {
   switch (props.frontlineLog.result) {
     case 'win':
-      return '胜'
+      return '勝利'
     case 'lose':
-      return '负'
+      return '敗北'
     case '1st':
-      return '冠军'
+      return '1位'
     case '2nd':
-      return '亚军'
+      return '2位'
     case '3rd':
-      return '季军'
+      return '3位'
     default:
       return props.frontlineLog.result
   }
@@ -115,7 +115,7 @@ const detailBgColor = computed(() => {
             <n-divider vertical class="!mx-1" />
             <img :src="`/icon/game-effect/battlehigh_${frontlineLog.battleHigh.level}.png`" class="w-auto h-[1.1rem]" />
             <span v-if="frontlineLog.battleHigh.level === 5">
-              (用时{{ formatTimeDurationText(frontlineLog.battleHigh.maxUseTime) }})
+              (到達時間 {{ formatTimeDurationText(frontlineLog.battleHigh.maxUseTime) }})
             </span>
           </template>
         </div>
@@ -140,7 +140,7 @@ const detailBgColor = computed(() => {
         <div class="p-2 text-[1.15rem] font-semibold text-white/90 border-b border-white/15 text-shadow">
           — KNOCKOUTS —
         </div>
-        <div v-if="!frontlineLog.knockouts.length" class="flex flex-wrap items-center text-[1.1rem] text-white/85 py-1 px-2">无</div>
+        <div v-if="!frontlineLog.knockouts.length" class="flex flex-wrap items-center text-[1.1rem] text-white/85 py-1 px-2">なし</div>
         <div
           v-for="(death, i) in frontlineLog.knockouts"
           :key="`ko-${i}`"
@@ -148,15 +148,15 @@ const detailBgColor = computed(() => {
         >
           <div class="mr-2">{{ formatTime(death.happenTime) }}</div>
           <div class="flex flex-wrap flex-1 gap-x-1">
-            <span>使用</span>
+            <span>使用した</span>
             <template v-if="death.summonedBy">
               <span class="text-orange-300">{{ death.perpetratorName }}</span>
-              <span>发动的</span>
+              <span>が発動した</span>
             </template>
             <span class="text-orange-300">{{ death.lasthitActionName }}</span>
-            <span>造成了</span>
+            <span>で</span>
             <span class="text-orange-300">{{ getDeathDamage(death) }}</span>
-            <span>伤害，击倒了</span>
+            <span>ダメージを与え、ノックアウト:</span>
             <div class="flex items-center">
               <JobSpan v-if="death.victimJob" :job="death.victimJob" />
               <span class="text-orange-300">{{ death.victimName }}</span>
@@ -168,7 +168,7 @@ const detailBgColor = computed(() => {
         <div class="p-2 pt-1 text-[1.15rem] font-semibold text-white/90 border-b border-white/15 text-shadow">
           — DEATHS —
         </div>
-        <div v-if="!frontlineLog.deaths.length" class="flex flex-wrap items-center text-[1.1rem] text-white/85 py-1 px-2">无</div>
+        <div v-if="!frontlineLog.deaths.length" class="flex flex-wrap items-center text-[1.1rem] text-white/85 py-1 px-2">なし</div>
         <div
           v-for="(death, i) in frontlineLog.deaths"
           :key="`death-${i}`"
@@ -176,7 +176,7 @@ const detailBgColor = computed(() => {
         >
           <div class="mr-2">{{ formatTime(death.happenTime) }}</div>
           <div class="flex flex-wrap flex-1 gap-x-1">
-            <span>被</span>
+            <span>相手:</span>
             <div class="flex items-center">
               <JobSpan v-if="death.perpetratorJob" :job="death.perpetratorJob" />
               <span class="text-orange-300">
@@ -184,14 +184,14 @@ const detailBgColor = computed(() => {
               </span>
             </div>
             <template v-if="death.summonedBy">
-              <span>召唤的</span>
+              <span>が召喚した</span>
               <span class="text-orange-300">{{ death.perpetratorName }}</span>
             </template>
-            <span>用</span>
+            <span>の</span>
             <span class="text-orange-300">{{ death.lasthitActionName }}</span>
-            <span>造成了</span>
+            <span>で</span>
             <span class="text-orange-300">{{ getDeathDamage(death) }}</span>
-            <span>伤害，因此阵亡</span>
+            <span>ダメージを受け、戦闘不能</span>
           </div>
         </div>
       </div>
