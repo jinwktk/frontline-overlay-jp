@@ -6,11 +6,13 @@ import { Frontline } from '@/types'
  * 轮换算法参考了 https://github.com/NekoWoods/what-zc-today/blob/main/sketch.js
  */
 
-const startDate = new Date('2026-04-27T15:00:00Z') // 此时间节点是轮换起点
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000
+const DAY_MS = 24 * 60 * 60 * 1000
+const startDate = new Date('2026-04-27T15:00:00Z') // JST 2026-04-28 00:00 のローテーション起点
 const showFuture = [0, 1, 2, 3, 4, 5, 6] as const
 
 const now = ref(new Date())
-const days = ref(daysBetween(startDate, new Date()))
+const days = ref(daysBetweenJstMidnights(startDate, new Date()))
 const remainder = ref(calRemainder(days.value))
 const timer = ref(0)
 
@@ -19,7 +21,7 @@ onMounted(() => {
     const current = new Date()
     now.value = current
 
-    const dayCount = daysBetween(startDate, current)
+    const dayCount = daysBetweenJstMidnights(startDate, current)
     days.value = dayCount
     remainder.value = calRemainder(dayCount)
   }, 1000)
@@ -41,14 +43,12 @@ const futureData = computed(() => showFuture.map(val => {
   }
 }))
 
-function daysBetween(from: Date, to: Date) {
-  let diffMs = getDtVal(to) - getDtVal(from)
-  if (diffMs < 0) diffMs = -1 * diffMs
-  return Math.floor(diffMs / (1000 * 3600 * 24))
+function daysBetweenJstMidnights(from: Date, to: Date) {
+  return getJstDayNumber(to) - getJstDayNumber(from)
+}
 
-  function getDtVal(date: Date) {
-    return date.getTime() + date.getTimezoneOffset() * 1000 * 60
-  }
+function getJstDayNumber(date: Date) {
+  return Math.floor((date.getTime() + JST_OFFSET_MS) / DAY_MS)
 }
 function calRemainder(day: number) {
   return day % 8
@@ -75,21 +75,13 @@ const getFrontline = (index: number) => {
   }
 }
 
-const getNext23 = (now: Date, addDay?: number) => {
-  const next23 = new Date(now)
-  next23.setHours(23, 0, 0, 0)
-  // 如果已经过了今天23:00，则目标是明天的23:00
-  if (now.getTime() >= next23.getTime()) {
-    next23.setDate(next23.getDate() + 1)
-  }
-  if (addDay) {
-    next23.setDate(next23.getDate() + addDay)
-  }
-  return next23
+const getNextJstMidnight = (current: Date, addDay = 0) => {
+  const nextJstDayNumber = getJstDayNumber(current) + 1 + addDay
+  return new Date(nextJstDayNumber * DAY_MS - JST_OFFSET_MS)
 }
-const timeUntilNext23 = (now: Date, addDay?: number) => {
-  const next23 = getNext23(now, addDay)
-  const diffMs = next23.getTime() - now.getTime()
+const timeUntilNextJstMidnight = (current: Date, addDay?: number) => {
+  const nextJstMidnight = getNextJstMidnight(current, addDay)
+  const diffMs = Math.max(0, nextJstMidnight.getTime() - current.getTime())
 
   const hours = Math.floor(diffMs / (1000 * 60 * 60)).toString().padStart(2, '0')
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')
@@ -99,13 +91,14 @@ const timeUntilNext23 = (now: Date, addDay?: number) => {
 }
 const formatDate = (date: Date) => {
   return date.toLocaleString('ja-JP', {
+    timeZone: 'Asia/Tokyo',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
-  }).replace(/\//g, '/').replace(',', '');
+  }).replace(/\//g, '/').replace(',', '')
 }
 
 </script>
@@ -116,7 +109,7 @@ const formatDate = (date: Date) => {
     <div class="page-title">
       <div class="flex w-full items-center">
         <div>現在の戦場</div>
-        <div class="ml-auto">{{ `(残り${timeUntilNext23(now)})` }}</div>
+        <div class="ml-auto">{{ `(残り${timeUntilNextJstMidnight(now)})` }}</div>
       </div>
     </div>
     <div
@@ -156,7 +149,7 @@ const formatDate = (date: Date) => {
           <span>{{ future.names[1] }}</span>
         </div>
         <div class="ml-auto">
-          {{ `${formatDate(getNext23(now, future.val))}／${timeUntilNext23(now, future.val)}後` }}
+          {{ `${formatDate(getNextJstMidnight(now, future.val))}／${timeUntilNextJstMidnight(now, future.val)}後` }}
         </div>
       </div>
     </div>
