@@ -94,9 +94,9 @@ const useCombatParser = () => {
   const store = useStore()
 
   const parseGc = (gc_name: string) => {
-    if (gc_name === '黑涡团') return GrandCompany.maelstrom
+    if (gc_name === '黑涡团' || gc_name === '黒渦団') return GrandCompany.maelstrom
     else if (gc_name === '双蛇党') return GrandCompany.twinadder
-    else if (gc_name === '恒辉队') return GrandCompany.immoflame
+    else if (gc_name === '恒辉队' || gc_name === '不滅隊') return GrandCompany.immoflame
     throw new Error('parseGc: unknown gc:' + gc_name)
   }
   const getCurrPointCount = () => {
@@ -418,6 +418,7 @@ const useCombatParser = () => {
 
     // 处理战斗开始信息
     const matchGc = msg.match(/以(黑涡团|双蛇党|恒辉队)的身份参加了纷争前线！/)
+      ?? msg.match(/フロントラインに(黒渦団|双蛇党|不滅隊)として参加しました！/)
     if (
       matchGc
       || msg === '战斗即将开始！'
@@ -482,6 +483,32 @@ const useCombatParser = () => {
     let pointLogMatched = false
     if (combatData.zone === Frontline.seize) {
       pointLogMatched = parsePointLog({
+        mode: 'seize',
+        neutralMatch: {
+          match: /アラガントームリス(.*?)号基がランク(S|A|B)で活動を開始した！/, indexes: [1, 2],
+        },
+        conquerMatch: {
+          match: /(黒渦団|双蛇党|不滅隊)がランク(S|A|B)のアラガントームリス(.*?)号基を占拠した！/, indexes: [3, 2, 1],
+        },
+        pauseMatch: {
+          match: /ランク(S|A|B)のアラガントームリス(.*?)号基が中立状態になった！/, indexes: [2, 1],
+        },
+        cleanMatch: {
+          match: /ランク(S|A|B)のアラガントームリス(.*?)号基の情報が枯渇した！/, indexes: [2, 1],
+        },
+        getFp: (ptLv: string) => {
+          if (ptLv === 'S') return [160, 4]
+          else if (ptLv === 'A') return [120, 3]
+          else if (ptLv === 'B') return [80, 2]
+          throw new Error('[gcFp] wtf point is? ' + ptLv)
+        },
+        ptMax: {
+          initial: 4,
+          changeEvents: [
+            { msg: '「シールロック (争奪戦)」の終了まで、あと10分。', changeTo: 3 },
+          ]
+        }
+      }) || parsePointLog({
         mode: 'seize',
         neutralMatch: {
           match: /(S|A|B)级的亚拉戈石文(.*?)开始活动了！/, indexes: [2, 1],

@@ -53,3 +53,6 @@
 - GitHub Pages は公式 Actions の `configure-pages` / `upload-pages-artifact` / `deploy-pages` で `dist` を公開する構成へ変更した。
 - 設定画面を開くと `https://jinwktk.github.io/frontline-overlay/?redirect=-jp%2Fconfig` のように元リポジトリ側へ誤リダイレクトされる問題を確認した。原因は `public/404.html` の `repo` が `/frontline-overlay` のままだったこと。`/frontline-overlay-jp` へ修正し、`scripts/check-jp-repo.cjs` に回帰テストを追加した。
 - ユーザー確認により `沃刻其特` の日本語名は `ウォーコー・チーテー` と確定したため、README、CHANGELOG、表示名関数、型コメントを更新した。`scripts/check-jp-repo.cjs` に回帰テストを追加した。
+- `C:\Users\mlove\AppData\Roaming\Advanced Combat Tracker\FFXIVLogs\Network_30109_20260526.log` を確認し、日本語クライアントでは `フロントラインに不滅隊として参加しました！` が出るため、従来の中国語開始判定では `対戦開始を待っています` のままになることを特定した。
+- `scripts/check-jp-parser.cjs` を追加し、日本語フロントライン参加ログとシールロックの日本語アラガントームリスログの回帰チェックを追加した。
+- `useCombatParser.ts` に日本語 GC 名（黒渦団/双蛇党/不滅隊）、日本語フロントライン参加ログ、シールロックのアラガントームリス出現・占拠・中立化・枯渇ログの解析を追加した。
