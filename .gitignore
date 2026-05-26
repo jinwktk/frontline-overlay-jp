@@ -35,6 +35,9 @@ private-folder-alias.json
 
 .eslintcache
 
+# Local OMX workflow state
+.omx/
+
 # Cypress
 /cypress/videos/
 /cypress/screenshots/

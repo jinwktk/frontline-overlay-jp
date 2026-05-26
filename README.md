@@ -1,73 +1,82 @@
-# FFXIV PvP悬浮窗
+# FFXIV PvP オーバーレイ 日本語版
 
-[![GitHub Release](https://img.shields.io/github/v/release/InfSein/frontline-overlay?style=flat&logo=github)](https://github.com/InfSein/hqhelper-dawntrail/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/jinwktk/frontline-overlay-jp?style=flat&logo=github)](https://github.com/jinwktk/frontline-overlay-jp/releases)
 <br>
 ![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=flat&logo=vite)
 ![Vue3](https://img.shields.io/badge/Vue-3.5.25-4FC08D?style=flat&logo=vue.js)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4.19-06b6d4?logo=tailwindcss)
 
-专为 最终幻想XIV PvP 玩法制作的 ACT OverlayPlugin 悬浮窗插件。
+`InfSein/frontline-overlay` をベースにした、ファイナルファンタジーXIV PvP 向け ACT OverlayPlugin オーバーレイの日本語版です。
 
-一开始只支持纷争前线，所以叫 <code>**frontline**-overlay</code> 。<br>
-在 `v1.3.0` 之后支持解析水晶冲突。<br>
-在 `v1.4.0` 之后支持解析烈羽争锋。
+公開 URL:
 
-> [!TIP]\
-> 仅为国服简体中文客户端设计。<br>
-> 其他服务器／语言的客户端可能无法正常使用。
+```text
+https://jinwktk.github.io/frontline-overlay-jp/
+```
 
-## 工作进度
+> [!TIP]
+> 初期移植では UI とドキュメントの日本語化を優先しています。  
+> ACT ログ解析は元リポジトリの中国語クライアント向け実装を含むため、日本語クライアントの公式ログ文言へ完全対応するには追加確認が必要です。
 
-这里的进度指的是「战况」面板解析的开发进度。<br>
-「击倒」「阵亡」「好人」「坏人」「统计」面板已经支持解析全部的纷争前线／烈羽争锋／水晶冲突。
+## 元リポジトリとの関係
 
-|          ＼          |          开发         |
-| :------------------: | :-------------------: |
-|    尘封秘岩（争夺战）   |   :white_check_mark:    |
-|   昂萨哈凯尔（竞争战）   |  :white_check_mark:   |
-|     荣誉野（碎冰战）     | :black_square_button: |
-|   周边遗迹群（阵地战）   |   :white_check_mark:   |
-|    沃刻其特（演习战）   |   :white_check_mark:   |
-|        烈羽争锋        | :black_square_button: |
-|        水晶冲突        | :black_square_button: |
+- 元リポジトリ: `https://github.com/InfSein/frontline-overlay`
+- 日本語版リポジトリ: `https://github.com/jinwktk/frontline-overlay-jp`
+- `upstream` に元リポジトリを追加し、更新を取り込める構成にしています。
+- upstream から更新を取り込む場合は、ユーザー向け文言を日本語へ変換してから反映します。
 
-## 主要功能
+## 対応状況
+
+この進捗は「戦況」パネルの解析対応状況です。  
+「戦績」「因縁」「統計」パネルは、元実装の範囲でフロントライン／ライバルウィングズ／クリスタルコンフリクトの解析に対応しています。
+
+| コンテンツ | 対応 |
+| :-- | :--: |
+| 外縁遺跡群（制圧戦） | :white_check_mark: |
+| シールロック（争奪戦） | :white_check_mark: |
+| フィールド・オブ・グローリー（砕氷戦） | :black_square_button: |
+| オンサル・ハカイル（終節戦） | :white_check_mark: |
+| 沃刻其特（演習戦 / 日本語名確認中） | :white_check_mark: |
+| ライバルウィングズ | :black_square_button: |
+| クリスタルコンフリクト | :black_square_button: |
+
+## 主な機能
 
 <table>
   <tr>
-    <th colspan="2"><strong>实时查看刷点状况和点分预估</strong></th>
+    <th colspan="2"><strong>現在の拠点状況と残りポイント予測をリアルタイム表示</strong></th>
   </tr>
   <tr>
     <td><img alt="App Preview: Situation 1" src="./docs/image/app_preview/situation_1.jpg" /></td>
     <td><img alt="App Preview: Situation 2" src="./docs/image/app_preview/situation_2.jpg" /></td>
   </tr>
   <tr>
-    <th><strong>记录击倒详情</strong></th>
-    <th><strong>记录死亡详情</strong></th>
+    <th><strong>ノックアウト詳細を記録</strong></th>
+    <th><strong>戦闘不能詳細を記録</strong></th>
   </tr>
   <tr>
     <td><img alt="App Preview: Knockout" src="./docs/image/app_preview/knockout.jpg" /></td>
     <td><img alt="App Preview: Death" src="./docs/image/app_preview/death.jpg" /></td>
   </tr>
   <tr>
-    <th><strong>记录受到的关键援护技能</strong></th>
-    <th><strong>记录受到的关键阻碍技能</strong></th>
+    <th><strong>受けた重要支援スキルを記録</strong></th>
+    <th><strong>受けた重要妨害スキルを記録</strong></th>
   </tr>
   <tr>
-    <td><img alt="App Preview: Goodboy" src="./docs/image/app_preview/goodboy.jpg" /></td>
-    <td><img alt="App Preview: Badboy" src="./docs/image/app_preview/badboy.jpg" /></td>
+    <td><img alt="App Preview: Support" src="./docs/image/app_preview/goodboy.jpg" /></td>
+    <td><img alt="App Preview: Interference" src="./docs/image/app_preview/badboy.jpg" /></td>
   </tr>
   <tr>
-    <th><strong>记录发动的关键技能</strong></th>
-    <th><strong>记录、统计和分析本日战绩</strong></th>
+    <th><strong>自分が使用した重要スキルを記録</strong></th>
+    <th><strong>当日の戦績を記録・集計・分析</strong></th>
   </tr>
   <tr>
     <td><img alt="App Preview: Important Action Log" src="./docs/image/app_preview/iar.png" /></td>
     <td><img alt="App Preview: Statistics" src="./docs/image/app_preview/statistics.jpg" /></td>
   </tr>
   <tr>
-    <th><strong>展示当前战场和未来战场</strong></th>
-    <th><strong>自由折叠以减少占用</strong></th>
+    <th><strong>現在と今後のフロントラインを表示</strong></th>
+    <th><strong>折りたたんで表示領域を節約</strong></th>
   </tr>
   <tr>
     <td><img alt="App Preview: Calendar" src="./docs/image/app_preview/calendar.jpg" /></td>
@@ -75,21 +84,35 @@
   </tr>
 </table>
 
-## 使用方法
+## 使い方
 
-1. 在 `OverlayPlugin` 中新建悬浮窗，类型选择 `自定义悬浮窗`；
-2. 将悬浮窗地址设置为 `https://infsein.github.io/frontline-overlay/`；
-3. 按照喜好调整悬浮窗位置、大小和缩放；
-4. 可以点击右上方的设置按钮调整一些你需要或喜欢的选项；
-5. 后续悬浮窗发布新版本时，在 `关于` 选项卡进行检查和更新。
+1. `OverlayPlugin` で新しいオーバーレイを作成し、種類に `MiniParse` またはカスタムオーバーレイを選択します。
+2. オーバーレイ URL に `https://jinwktk.github.io/frontline-overlay-jp/` を設定します。
+3. 好みに合わせて位置、サイズ、拡大率を調整します。
+4. 右上の設定ボタンから必要な項目を調整します。
+5. 新しいバージョンが公開された場合は「情報」タブから確認・更新します。
 
-### 本地调试
+### ローカル開発
 
-* 在第2步将悬浮窗地址设置为 `http://localhost:3000` 即可。
+```bash
+npm ci
+npm run dev
+```
 
-## 开源许可
+ローカルで確認する場合は、オーバーレイ URL を `http://localhost:3000` に設定します。
 
-目前并未设置开源许可，仅供社区进行安全性审查。<br>
-未经特别授权，不得修改／再分发此项目。
-> [!CAUTION]\
-> 严禁商用。
+### 検証
+
+```bash
+npm test
+npm run type-check
+npm run build
+```
+
+## ライセンス
+
+元リポジトリには明示的なオープンソースライセンスが設定されていません。  
+本リポジトリも安全性確認と個人利用を目的とした日本語化フォークとして扱います。
+
+> [!CAUTION]
+> 商用利用は禁止です。

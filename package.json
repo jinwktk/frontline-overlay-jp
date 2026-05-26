@@ -12,6 +12,8 @@
     "build": "vite build",
     "postinstall": "node scripts/update-version.cjs",
     "preview": "vite preview",
+    "test": "npm run test:jp-repo",
+    "test:jp-repo": "node scripts/check-jp-repo.cjs",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache"
