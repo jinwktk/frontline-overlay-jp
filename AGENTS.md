@@ -51,3 +51,5 @@
 - `npm test`、`npm run type-check`、`npm run build` が通過した。`npm ci` 後の監査では moderate 2 件、high 6 件の脆弱性警告が出ているが、今回は依存更新は行っていない。
 - ローカル Vite 開発サーバー `http://127.0.0.1:3000/` を起動し、Playwright MCP でトップ画面の日本語表示と初期化ログのみであることを確認した。
 - GitHub Pages は公式 Actions の `configure-pages` / `upload-pages-artifact` / `deploy-pages` で `dist` を公開する構成へ変更した。
+- 設定画面を開くと `https://jinwktk.github.io/frontline-overlay/?redirect=-jp%2Fconfig` のように元リポジトリ側へ誤リダイレクトされる問題を確認した。原因は `public/404.html` の `repo` が `/frontline-overlay` のままだったこと。`/frontline-overlay-jp` へ修正し、`scripts/check-jp-repo.cjs` に回帰テストを追加した。
+- ユーザー確認により `沃刻其特` の日本語名は `ウォーコー・チーテー` と確定したため、README、CHANGELOG、表示名関数、型コメントを更新した。`scripts/check-jp-repo.cjs` に回帰テストを追加した。

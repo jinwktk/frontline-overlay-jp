@@ -36,7 +36,7 @@ https://jinwktk.github.io/frontline-overlay-jp/
 | シールロック（争奪戦） | :white_check_mark: |
 | フィールド・オブ・グローリー（砕氷戦） | :black_square_button: |
 | オンサル・ハカイル（終節戦） | :white_check_mark: |
-| 沃刻其特（演習戦 / 日本語名確認中） | :white_check_mark: |
+| ウォーコー・チーテー（演習戦） | :white_check_mark: |
 | ライバルウィングズ | :black_square_button: |
 | クリスタルコンフリクト | :black_square_button: |
 
@@ -108,6 +108,10 @@ npm test
 npm run type-check
 npm run build
 ```
+
+### GitHub Pages のルーティング
+
+`/config` や `/changelog` へ直接アクセスした場合は、`public/404.html` が `frontline-overlay-jp` のベースパスへ戻してからアプリ内ルーターに渡します。
 
 ## ライセンス
 

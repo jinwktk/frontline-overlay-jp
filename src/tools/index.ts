@@ -231,7 +231,7 @@ export const getFrontlineNames = (fl: PvPBattle) => {
     case Frontline.seize: return ['争奪', 'シールロック', '争奪戦'] as const
     case Frontline.shatter: return ['砕氷', 'フィールド・オブ・グローリー', '砕氷戦'] as const
     case Frontline.naadam: return ['終節', 'オンサル・ハカイル', '終節戦'] as const
-    case Frontline.triumph: return ['演習', '沃刻其特', '演習戦'] as const
+    case Frontline.triumph: return ['演習', 'ウォーコー・チーテー', '演習戦'] as const
     case RivalWings.hiddengorge: return ['ヒドゥンゴージ', 'ヒドゥンゴージ', '機工戦'] as const
     case CrystalConflict.palaistra: return ['パライストラ', 'パライストラ', 'クリスタルコンフリクト'] as const
     case CrystalConflict.cloudnine: return ['クラウドナイン', 'クラウドナイン', 'クリスタルコンフリクト'] as const

@@ -35,7 +35,7 @@ export enum Frontline {
   shatter = "shatter",
   /** 昂萨哈凯尔（竞争战） */
   naadam = "naadam",
-  /** 沃刻其特（演习战） */
+  /** ウォーコー・チーテー（演習戦） */
   triumph = "triumph",
 }
 export enum RivalWings {
@@ -67,7 +67,7 @@ const GameZones = {
     shatter: 554,
     /** 昂萨哈凯尔（竞争战） */
     naadam: 888,
-    /** 沃刻其特（演习战） */
+    /** ウォーコー・チーテー（演習戦） */
     triumph: 1313,
   },
   rivalWings: {

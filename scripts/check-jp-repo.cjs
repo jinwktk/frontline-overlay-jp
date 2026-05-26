@@ -32,6 +32,26 @@ const expectations = [
     actual: read('AGENTS.md').includes('frontline-overlay-jp'),
     expected: true,
   },
+  {
+    name: 'GitHub Pages 404 redirect uses Japanese fork base path',
+    actual: read('public/404.html').includes("'/frontline-overlay-jp'"),
+    expected: true,
+  },
+  {
+    name: 'README uses confirmed Japanese name for 沃刻其特',
+    actual: read('README.md').includes('ウォーコー・チーテー'),
+    expected: true,
+  },
+  {
+    name: 'README no longer marks 沃刻其特 translation as pending',
+    actual: read('README.md').includes('日本語名確認中'),
+    expected: false,
+  },
+  {
+    name: 'app display names use confirmed Japanese name for 沃刻其特',
+    actual: read('src/tools/index.ts').includes('ウォーコー・チーテー'),
+    expected: true,
+  },
 ]
 
 for (const expectation of expectations) {
